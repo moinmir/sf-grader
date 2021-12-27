@@ -1,7 +1,6 @@
 import json
 import tempfile
 import os
-import syscalls_pb2
 
 def handle(req, syscall):
     resp = syscall.github_rest_get("/repos/%s/tarball/%s" % (req["repository"]["full_name"], req["after"]));

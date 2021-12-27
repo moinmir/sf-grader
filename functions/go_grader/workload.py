@@ -1,7 +1,6 @@
 import json
 import tempfile
 import os
-import syscalls_pb2
 
 def handle(req, syscall):
     # Fetch and untar grading script tarball
