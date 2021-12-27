@@ -30,6 +30,6 @@ def handle(req, syscall):
                         if tr["Action"] in ["pass", "fail"]:
                             tr = dict((name.lower(), val) for name, val in tr.items())
                             final_results.append(json.dumps(tr))
-                    key = "%s/test_results" % req["submission"]
+                    key = os.path.join(os.path.splitext(req["submission"])[0], "test_results.jsonl")
                     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
         return { "test_results": key }

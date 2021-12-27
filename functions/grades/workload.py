@@ -1,3 +1,4 @@
+import os
 import json
 
 def handle(req, syscall):
@@ -28,7 +29,7 @@ def handle(req, syscall):
         "tests": tests
         }
 
-    key = "%s/grade" % req["submission"]
+    key = os.path.join(os.path.dirname(req["test_results"]),"grade.json")
     syscall.write_key(bytes(key, "utf-8"), bytes(json.dumps(output), "utf-8"))
 
     return {
