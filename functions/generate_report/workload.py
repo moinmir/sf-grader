@@ -25,11 +25,11 @@ def handle(req, syscall):
         for subtest, res in test["subtests"].items():
             parts = "/".join(subtest.split("/")[1:])
             parts = parts.split("&")
-            output.append("  > {0: >10} {1: <50} ...{2}".format(parts[0], parts[1], "FAIL" if res["action"] == "fail" else "ok"))
-            if test["action"] == "fail":
-                output.append("                               -- test failed (-%d) --" % test["conf"]["points"])
-            else:
-                output.append("                               -- test passed --")
+            output.append(">     {0: >10} {1: <50} ...{2}".format(parts[0], parts[1], "FAIL" if res["action"] == "fail" else "ok"))
+        if test["action"] == "fail":
+            output.append("                               -- test failed (-%d) --" % test["conf"]["points"])
+        else:
+            output.append("                               -- test passed --")
 
     if len(performance_tests) > 0:
         output.append("## Performance Tests")
