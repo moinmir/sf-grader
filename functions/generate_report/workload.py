@@ -1,5 +1,6 @@
 from functools import reduce
 import json
+import os
 
 def handle(req, syscall):
     grade = json.loads(syscall.read_key(bytes(req["grade"], "utf-8")))
@@ -38,6 +39,6 @@ def handle(req, syscall):
                 output.append("                               -- test failed (-%d) --" % test["conf"]["points"])
             else:
                 output.append("                               -- test passed --")
-    key = "%s-report.md" % req["grade"]
+    key = "%s-report.md" % os.path.splitext(req["grade"])[0]
     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
     return { "report": key }
