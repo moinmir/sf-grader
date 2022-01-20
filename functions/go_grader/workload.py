@@ -1,6 +1,7 @@
 import json
 import tempfile
 import os
+import subprocess
 
 def handle(req, syscall):
     # Fetch and untar grading script tarball
@@ -17,18 +18,34 @@ def handle(req, syscall):
                 submission_tar.write(submission_tar_data)
                 submission_tar.flush()
                 with tempfile.TemporaryDirectory() as submission_dir:
-                    os.system("mkdir %s/src" % submission_dir)
-                    os.system("tar -C %s/src/ -xzf %s --strip-components=1" % (submission_dir, submission_tar.name))
+                    os.system("mkdir %s" % submission_dir)
+                    os.system("tar -C %s -xzf %s --strip-components=1" % (submission_dir, submission_tar.name))
 
                     # OK, run tests
+                    os.putenv("GOCACHE", "%s/.cache" % script_dir)
+                    os.putenv("GOROOT", "/srv/usr/lib/go") 
+                    os.putenv("SOLUTION_DIR", submission_dir)
+                    os.putenv("PATH", "%s:%s" % ("/srv/usr/lib/go/bin", os.getenv("PATH")))
                     os.chdir(script_dir)
-                    test_results = os.popen("GOCACHE=%s/.cache GOPATH=%s GOROOT=/srv/usr/lib/go GO111MODULE=off /srv/usr/lib/go/bin/go test -json" % (script_dir, submission_dir)).read()
-                    final_results = []
-                    for test_result in test_results.splitlines():
-                        tr = json.loads(test_result)
-                        if tr["Action"] in ["pass", "fail"]:
-                            tr = dict((name.lower(), val) for name, val in tr.items())
-                            final_results.append(json.dumps(tr))
-                    key = os.path.join(os.path.splitext(req["submission"])[0], "test_results.jsonl")
-                    syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
-        return { "test_results": key }
+                    if os.path.exists("pretest") and os.access("pretest", os.X_OK):
+                        os.system("./pretest")
+                    compiledtest = subprocess.Popen("go test -c -o /tmp/grader", shell=True,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    compileout, compileerr = compiledtest.communicate()
+                    if compiledtest.returncode != 0:
+                        return { "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } }
+                    testrun = subprocess.Popen("/tmp/grader | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json", shell=True,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    test_results, errlog = testrun.communicate()
+                    if testrun.returncode >= 0:
+                        final_results = []
+                        for test_result in test_results.splitlines():
+                            tr = json.loads(test_result)
+                            if tr["Action"] in ["pass", "fail"]:
+                                tr = dict((name.lower(), val) for name, val in tr.items())
+                                final_results.append(json.dumps(tr))
+                        key = os.path.join(os.path.splitext(req["submission"])[0], "test_results.jsonl")
+                        syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
+                        return { "test_results": key }
+                    else:
+                        return { "error": { "testrun": str(errlog), "returncode": testrun.returncode } }
