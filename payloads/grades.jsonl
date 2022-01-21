@@ -1,1 +1,1 @@
-{ "test_results": "github/cos316/assignment2-starter-code/ee620f270a3ee76705c07784b6eca6dc8b5d1ed1/test_results.jsonl", "grader_config": "cos316/assignment2/grader_config" }
+{"args": {"test_results": "github/cos316/assignment2-starter-code/b541c851d79edad1d05fc64c1bcca88800703a30/test_results.jsonl"}, "workflow": [ "generate_report" ], "context": {"commit": "b541c851d79edad1d05fc64c1bcca88800703a30", "metadata": {"assignment": "assignment2"}, "push_date": 1642798607, "repository": "cos316/assignment2-starter-code"}}

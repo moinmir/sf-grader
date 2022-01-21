@@ -4,22 +4,37 @@ import os
 import subprocess
 
 def handle(req, syscall):
-    # Fetch and untar grading script tarball
-    with tempfile.NamedTemporaryFile(suffix=".tar.gz") as script_tar:
-        script_tar_data = syscall.read_key(bytes(req["script"], "utf-8"))
-        script_tar.write(script_tar_data)
-        script_tar.flush()
-        with tempfile.TemporaryDirectory() as script_dir:
-            os.system("tar -C %s -xzf %s" % (script_dir, script_tar.name))
+    args = req["args"]
+    workflow = req["workflow"]
+    context = req["context"]
+    result = app_handle(args, context, syscall)
+    if len(workflow) > 0:
+        next_function = workflow.pop(0)
+        syscall.invoke(next_function, json.dumps({
+            "args": result,
+            "workflow": workflow,
+            "context": context
+        }))
+    return result
 
-            # Fetch and untar submission tarball
-            with tempfile.NamedTemporaryFile(suffix=".tar.gz") as submission_tar:
-                submission_tar_data = syscall.read_key(bytes(req["submission"], "utf-8"))
-                submission_tar.write(submission_tar_data)
-                submission_tar.flush()
-                with tempfile.TemporaryDirectory() as submission_dir:
-                    os.system("mkdir %s" % submission_dir)
-                    os.system("tar -C %s -xzf %s --strip-components=1" % (submission_dir, submission_tar.name))
+def app_handle(args, state, syscall):
+    # Fetch and untar submission tarball
+    assignment = state["metadata"]["assignment"]
+    with tempfile.NamedTemporaryFile(suffix=".tar.gz") as submission_tar:
+        submission_tar_data = syscall.read_key(bytes(args["submission"], "utf-8"))
+        submission_tar.write(submission_tar_data)
+        submission_tar.flush()
+        with tempfile.TemporaryDirectory() as submission_dir:
+            os.system("mkdir %s" % submission_dir)
+            os.system("tar -C %s -xzf %s --strip-components=1" % (submission_dir, submission_tar.name))
+
+            # Fetch and untar grading script tarball
+            with tempfile.NamedTemporaryFile(suffix=".tar.gz") as script_tar:
+                script_tar_data = syscall.read_key(bytes("cos316/%s/grading_script" % assignment, "utf-8"))
+                script_tar.write(script_tar_data)
+                script_tar.flush()
+                with tempfile.TemporaryDirectory() as script_dir:
+                    os.system("tar -C %s -xzf %s" % (script_dir, script_tar.name))
 
                     # OK, run tests
                     os.putenv("GOCACHE", "%s/.cache" % script_dir)
@@ -44,8 +59,9 @@ def handle(req, syscall):
                             if tr["Action"] in ["pass", "fail"]:
                                 tr = dict((name.lower(), val) for name, val in tr.items())
                                 final_results.append(json.dumps(tr))
-                        key = os.path.join(os.path.splitext(req["submission"])[0], "test_results.jsonl")
+                        key = os.path.join(os.path.splitext(args["submission"])[0], "test_results.jsonl")
                         syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
                         return { "test_results": key }
                     else:
                         return { "error": { "testrun": str(errlog), "returncode": testrun.returncode } }
+    return {}

@@ -22,13 +22,6 @@ run/%: output/%.img payloads/%.jsonl
 	@singlevm --mem_size 256 --kernel vmlinux-4.20.0 --rootfs python3.ext4 --appfs output/$*.img < payloads/$*.jsonl
 	@touch $@
 
-# Dependencies between functions
-run/gh_repo:
-run/go_grader:       run/gh_repo
-run/grades:          run/go_grader
-run/generate_report: run/grades
-run/post_comment:    run/generate_report
-
 .PHONY: clean
 clean:
 	rm -f $(OUTPUTS) $(RUNS)
