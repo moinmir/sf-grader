@@ -13,9 +13,9 @@
 
 with pkgs;
 let
-  snapfaas = import snapfaasSrc { inherit pkgs release; };
+  snapfaas = (import snapfaasSrc { inherit pkgs release; }).snapfaas;
 in mkShell {
-  buildInputs = [ lkl snapfaas ];
+  buildInputs = [ lkl snapfaas lmdb ];
   shellHook = ''
     # Mark variables which are modified or created for export.
     set -a
