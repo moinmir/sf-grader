@@ -25,3 +25,21 @@ $ make run/FUNC_NAME
 This will build the function image and run it using `fc_wrapper`, passing in
 each of the requests from the payload one after the other. It stores the output
 of in `run/FUNC_NAME`.
+
+## Objects
+
+- `github/[owner]/[repo]/_meta` - JSON object with assignment and list of student NetIDs
+  Ex: `github/cos316/assignment0-foobar/_meta`
+  ```json
+  { "assignment": "assignment0", "users": [ "aalevy", "kap" ] }
+  ```
+
+- `github/[owner]/[repo]/_workflow` - JSON array with workflow functions
+  Ex: `github/cos316/assignment0-foobar/_workflow`
+  ```json
+  [ "go_grader", "grades", "generate_report", "post_comment" ]
+  ```
+ 
+- `cos316/[assignment]/grading_script` - tarball of the grading script
+
+- `cos316/[assignment]/grader_config` - JSON configuration from grading script
