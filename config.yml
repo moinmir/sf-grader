@@ -4,6 +4,12 @@ kernel_path: "vmlinux-4.20.0"
 runtimefs_dir: "./"
 appfs_dir: "output/"
 functions:
+  start_assignment:
+    vcpus: 1
+    memory: 128
+    runtimefs: "python3.ext4"
+    appfs: "start_assignment.img"
+    concurrency_limit: 100
   gh_repo:
     vcpus: 1
     memory: 128
@@ -27,5 +33,11 @@ functions:
     memory: 128
     runtimefs: "python3.ext4"
     appfs: "generate_report.img"
+    concurrency_limit: 100
+  post_comment:
+    vcpus: 1
+    memory: 128
+    runtimefs: "python3.ext4"
+    appfs: "post_comment.img"
     concurrency_limit: 100
 

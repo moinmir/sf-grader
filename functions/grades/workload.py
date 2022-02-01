@@ -41,8 +41,9 @@ def app_handle(args, context, syscall):
         "points": points,
         "possible": total_points,
         "grade": points / total_points,
-        "tests": tests
-        }
+        "tests": tests,
+        "push_date": context["push_date"]
+    }
 
     key = os.path.join(os.path.dirname(args["test_results"]),"grade.json")
     syscall.write_key(bytes(key, "utf-8"), bytes(json.dumps(output), "utf-8"))

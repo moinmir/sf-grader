@@ -1,9 +1,9 @@
-FUNCTIONS=gh_repo go_grader grades generate_report
+FUNCTIONS=start_assignment gh_repo go_grader grades generate_report
 OUTPUTS=$(patsubst %, output/%.img, $(FUNCTIONS))
 RUNS=$(patsubst %, run/%, $(FUNCTIONS))
 
 .PHONY: all
-all: $(OUTPUTS) $(RUNS)
+all: $(OUTPUTS) #$(RUNS)
 
 output/%.img: functions/%/*
 	@truncate -s 500M $@

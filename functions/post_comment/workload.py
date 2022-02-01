@@ -1,8 +1,22 @@
 import json
 
 def handle(req, syscall):
-    report = syscall.read_key(bytes(req["report"], "utf-8"))
-    api_route = "/repos/%s/commits/%s/comments" % (req["repository"], req["commit"])
+    args = req["args"]
+    workflow = req["workflow"]
+    context = req["context"]
+    result = app_handle(args, context, syscall)
+    if len(workflow) > 0:
+        next_function = workflow.pop(0)
+        syscall.invoke(next_function, json.dumps({
+            "args": result,
+            "workflow": workflow,
+            "context": context
+        }))
+    return result
+
+def app_handle(args, state, syscall):
+    report = syscall.read_key(bytes(args["report"], "utf-8"))
+    api_route = "/repos/%s/commits/%s/comments" % (state["repository"], state["commit"])
     body = {
         "body": report.decode()
     }

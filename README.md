@@ -28,6 +28,12 @@ of in `run/FUNC_NAME`.
 
 ## Objects
 
+- `cos316/assignments` - JSON object mapping assignment names to starter code repo and other metadata.
+  Ex:
+  ```json
+  { "assignment0": { "starter_code": "cos316/assignment0-starter-code" } }
+  ```
+
 - `github/[owner]/[repo]/_meta` - JSON object with assignment and list of student NetIDs
   Ex: `github/cos316/assignment0-foobar/_meta`
   ```json

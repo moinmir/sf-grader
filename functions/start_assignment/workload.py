@@ -42,10 +42,19 @@ def handle(req, syscall):
                 'private': True
         }
         resp = syscall.github_rest_post(api_route, body);
-        if True or resp.status == 201:
+        if resp.status == 201:
                 break
         elif i == 2:
-            return { 'error': "Can't find a unique repository name" }
+            return { 'error': "Can't find a unique repository name", "status": resp.status }
+
+    for user in req['gh_handles']:
+        api_route = "/repos/cos316/%s/collaborators/%s" % (name, user)
+        body = {
+            'permission': 'push'
+        }
+        resp = syscall.github_rest_put(api_route, body);
+        if resp.status > 204:
+            return { 'error': "Couldn't add user to repository", "status": resp.status }
 
 
     syscall.write_key(bytes('github/cos316/%s/_meta' % name, 'utf-8'),
@@ -58,12 +67,5 @@ def handle(req, syscall):
     for user in req['users']:
         syscall.write_key(bytes('cos316/assignments/%s/%s' % (req["assignment"], user), 'utf-8'),
                           bytes("cos316/%s" % name, 'utf-8'))
-
-    for user in req['gh_handles']:
-        api_route = "/repos/cos316/%s/collaborators/%s" % (name, user)
-        body = {
-            'permission': 'push'
-        }
-        resp = syscall.github_rest_put(api_route, body);
 
     return { 'name': name, 'users': req['users'], 'github_handles': req['gh_handles'] }

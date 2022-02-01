@@ -24,7 +24,7 @@ def app_handle(args, context, syscall):
     performance_tests = [ test for test in grade["tests"] if ("performance" in test["conf"] and test["conf"]["performance"]) ]
 
     tests_passed = len([ test for test in grade["tests"] if test["action"] == "pass"])
-    all_subtests = reduce(lambda a,b: list(a) + list(b), map(lambda t: t['subtests'].items(), grade["tests"]))
+    all_subtests = reduce(lambda a,b: list(a) + list(b), map(lambda t: t['subtests'].items(), grade["tests"]), [])
     passed_subtests = len([ test for test in all_subtests if test[1]["action"] == "pass"])
 
     output = []
