@@ -24,7 +24,12 @@ def handle(req, syscall):
     if req["assignment"] not in assignments:
         return { 'error': 'No such assignment' }
 
-    for user in req['users']:
+    users = set(req['users'])
+    group_size = (assignment["assignment"]["group_size"] or 1)
+    if len(users) != group_size:
+        return { 'error': 'This assignment requires a group size of %d, given %d.' % (group_size, len(users)) }
+
+    for user in users:
         repo = syscall.read_key(bytes('cos316/assignments/%s/%s' % (req["assignment"], user), 'utf-8'));
         if repo:
             return {
@@ -60,12 +65,12 @@ def handle(req, syscall):
     syscall.write_key(bytes('github/cos316/%s/_meta' % name, 'utf-8'),
                       bytes(json.dumps({
                           'assignment': req['assignment'],
-                          'users': req['users'],
+                          'users': list(users),
                       }), 'utf-8'))
     syscall.write_key(bytes('github/cos316/%s/_workflow' % name, 'utf-8'),
                       bytes(json.dumps(["go_grader", "grades", "generate_report", "post_comment"]), 'utf-8'))
-    for user in req['users']:
+    for user in users:
         syscall.write_key(bytes('cos316/assignments/%s/%s' % (req["assignment"], user), 'utf-8'),
                           bytes("cos316/%s" % name, 'utf-8'))
 
-    return { 'name': name, 'users': req['users'], 'github_handles': req['gh_handles'] }
+    return { 'name': name, 'users': list(users), 'github_handles': req['gh_handles'] }
