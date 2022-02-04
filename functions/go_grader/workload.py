@@ -18,6 +18,7 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, state, syscall):
+    os.system("ifconfig lo up")
     # Fetch and untar submission tarball
     assignment = state["metadata"]["assignment"]
     with tempfile.NamedTemporaryFile(suffix=".tar.gz") as submission_tar:
@@ -56,7 +57,7 @@ def app_handle(args, state, syscall):
                         final_results = []
                         for test_result in test_results.splitlines():
                             tr = json.loads(test_result)
-                            if tr["Action"] in ["pass", "fail"]:
+                            if tr["Action"] in ["pass", "fail", "run", "output"]:
                                 tr = dict((name.lower(), val) for name, val in tr.items())
                                 final_results.append(json.dumps(tr))
                         key = os.path.join(os.path.splitext(args["submission"])[0], "test_results.jsonl")
