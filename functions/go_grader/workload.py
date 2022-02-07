@@ -52,17 +52,18 @@ def app_handle(args, state, syscall):
                         return { "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } }
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json", shell=True,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                    test_results, errlog = testrun.communicate()
+                    final_results = []
+                    for test_result in testrun.stdout:
+                        tr = json.loads(test_result)
+                        if tr["Action"] in ["pass", "fail", "run"]:
+                            tr = dict((name.lower(), val) for name, val in tr.items())
+                            final_results.append(json.dumps(tr))
+                    key = os.path.join(os.path.splitext(args["submission"])[0], "test_results.jsonl")
+                    syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
+                    testrun.wait()
                     if testrun.returncode >= 0:
-                        final_results = []
-                        for test_result in test_results.splitlines():
-                            tr = json.loads(test_result)
-                            if tr["Action"] in ["pass", "fail", "run", "output"]:
-                                tr = dict((name.lower(), val) for name, val in tr.items())
-                                final_results.append(json.dumps(tr))
-                        key = os.path.join(os.path.splitext(args["submission"])[0], "test_results.jsonl")
-                        syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
                         return { "test_results": key }
                     else:
+                        _, errlog = testrun.communicate()
                         return { "error": { "testrun": str(errlog), "returncode": testrun.returncode } }
     return {}
