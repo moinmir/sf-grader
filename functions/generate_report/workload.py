@@ -18,9 +18,13 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, context, syscall):
+    grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
+    config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
+    delim = config["subtest"]["delim"]
     grade = json.loads(syscall.read_key(bytes(args["grade_report"], "utf-8")))
+    grade["tests"] = [test for test in grade["tests"] if test["action"] in ["pass", "fail"]]
 
-    correctness_tests = [ test for test in grade["tests"] if not ("performance" in test["conf"] and test["conf"]["performance"]) ]
+    correctness_tests = [ test for test in grade["tests"] if not ("performance" in test["conf"] and test["conf"]["performance"])]
     performance_tests = [ test for test in grade["tests"] if ("performance" in test["conf"] and test["conf"]["performance"]) ]
 
     tests_passed = len([ test for test in grade["tests"] if test["action"] == "pass"])
@@ -39,9 +43,11 @@ def app_handle(args, context, syscall):
     output.append("## Correctness Tests")
     for i, test in enumerate(correctness_tests):
         output.append("### %d. %s" % (i + 1, test["conf"]["desc"]) )
-        for subtest, res in test["subtests"].items():
+        subtests = [(subtest, res) for (subtest, res) in
+                test["subtests"].items() if res["action"] in ["pass", "fail"]]
+        for subtest, res in subtests:
             parts = "/".join(subtest.split("/")[1:])
-            parts = parts.split("&")
+            parts = parts.split(delim)
             output.append(">     {0: >10} {1: <50} ...{2}".format(parts[0], parts[1], "FAIL" if res["action"] == "fail" else "ok"))
         if test["action"] == "fail":
             output.append("                               -- test failed (-%d) --" % test["conf"]["points"])

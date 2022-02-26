@@ -8,7 +8,7 @@ def handle(req, syscall):
     meta_key = "github/%s/_meta" % (req["repository"]["full_name"])
     workflow_key = "github/%s/_workflow" % (req["repository"]["full_name"])
 
-    metadataString = syscall.read_key(bytes(meta_key, "utf-8"))
+    metadataString = syscall.read_key(bytes(meta_key, "utf-8")) or "{}"
     if metadataString:
         metadata = json.loads(metadataString)
         workflow = json.loads(syscall.read_key(bytes(workflow_key, "utf-8")) or "[]")
@@ -26,7 +26,7 @@ def handle(req, syscall):
                 "context": {
                     "repository": req["repository"]["full_name"],
                     "commit": req["after"],
-                    "push_date": int(time.time()),
+                    "push_date": req["repository"]["pushed_at"],
                     "metadata": metadata
                 }
             }))
