@@ -51,7 +51,7 @@ def app_handle(args, state, syscall):
                     if compiledtest.returncode != 0:
                         return { "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } }
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json", shell=True,
-                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                            stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
                     final_results = []
                     for test_result in testrun.stdout:
                         tr = json.loads(test_result)

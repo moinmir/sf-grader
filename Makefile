@@ -19,7 +19,7 @@ output/%.img: functions/%/*
 	@resize2fs -M $@
 
 run/%: output/%.img payloads/%.jsonl
-	@singlevm --mem_size 256 --kernel vmlinux-4.20.0 --rootfs python3.ext4 --appfs output/$*.img < payloads/$*.jsonl
+	@singlevm --mem_size 1024 --kernel vmlinux-4.20.0 --rootfs python3.ext4 --appfs output/$*.img < payloads/$*.jsonl
 	@touch $@
 
 .PHONY: clean
