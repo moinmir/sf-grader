@@ -18,6 +18,17 @@ output/%.img: functions/%/*
 	@e2fsck -f $@
 	@resize2fs -M $@
 
+output/example_grader.tgz: example_grader/*
+	tar -C example_grader -czf $@ .
+
+output/example_submission.tgz: example_submission/*
+	tar -czf $@ example_submission/
+
+.PHONY: prepdb
+prepdb: output/example_grader.tgz output/example_submission.tgz
+	sfdb -b cos316/example/grading_script - < output/example_grader.tgz
+	sfdb -b submission.tgz - < output/example_submission.tgz
+
 run/%: output/%.img payloads/%.jsonl
 	@singlevm --mem_size 1024 --kernel vmlinux-4.20.0 --rootfs python3.ext4 --appfs output/$*.img < payloads/$*.jsonl
 	@touch $@

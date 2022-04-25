@@ -1,1 +1,1 @@
-{"args": {"submission": "assignment.tgz"}, "workflow": [ "grades", "generate_report" ], "context": {"repository": "cos316/assignment2-starter-code", "commit": "b541c851d79edad1d05fc64c1bcca88800703a30", "push_date": 1642798607, "metadata": {"assignment": "assignment4"}}}
+{"args": {"submission": "submission.tgz"}, "workflow": [ "grades", "generate_report" ], "context": { "metadata": {"assignment": "example"}}}
