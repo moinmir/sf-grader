@@ -5,9 +5,13 @@ import subprocess
 
 def handle(req, syscall):
     args = req["args"]
-    workflow = req["workflow"]
     context = req["context"]
     result = app_handle(args, context, syscall)
+    if "error" in result:
+        workflow =  req["workflow_fail"]
+    else:
+        workflow = req["workflow"]
+        
     if len(workflow) > 0:
         next_function = workflow.pop(0)
         syscall.invoke(next_function, json.dumps({
@@ -26,7 +30,7 @@ def app_handle(args, state, syscall):
         submission_tar.write(submission_tar_data)
         submission_tar.flush()
         with tempfile.TemporaryDirectory() as submission_dir:
-            os.system("mkdir %s" % submission_dir)
+            os.system("mkdir -p %s" % submission_dir)
             os.system("tar -C %s -xzf %s --strip-components=1" % (submission_dir, submission_tar.name))
 
             # Fetch and untar grading script tarball
@@ -52,12 +56,7 @@ def app_handle(args, state, syscall):
                     final_results = []
 
                     if compiledtest.returncode != 0:
-                        final_results.append({"action" : "run", "test" : "TestNegate"})
-                        final_results.append({"action" : "uncompiled", "test" : "TestNegate"})
-                        final_results.append({"action" : "fail"})
-
-                        print({ "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } })
-                        # return { "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } }
+                        return { "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } }
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json", shell=True,
                             stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
 
@@ -71,12 +70,6 @@ def app_handle(args, state, syscall):
                     key = os.path.join(os.path.splitext(args["submission"])[0], "test_results.jsonl")
                     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
                     testrun.wait()
-                    print("\n\n\n======================")
-                    print("Reaches end in go_grader")
-                    print(key)
-                    print(final_results)
-                    print("======================\n\n\n")
-
                     if testrun.returncode >= 0:
                         return { "test_results": key }
                     else:
@@ -84,13 +77,3 @@ def app_handle(args, state, syscall):
                         return { "error": { "testrun": str(errlog), "returncode": testrun.returncode } }
     return {}
 
-
-# b'{"Action":"run","Test":"TestNegate"}\n'
-# b'{"Action":"output","Test":"TestNegate","Output":"=== RUN   TestNegate\\n"}\n'
-# b'{"Action":"output","Test":"TestNegate","Output":"--- PASS: TestNegate (0.00s)\\n"}\n'
-# b'{"Action":"pass","Test":"TestNegate"}\n'
-# b'{"Action":"output","Output":"PASS\\n"}\n'
-# b'{"Action":"pass"}\n'
-
-
-# ^[[A{'error': {'compile': "b'# example.com/example\\n../tmpzhvhm_58/example.go:4:9: cannot use !x (type bool) as type string in return argument\\n'", 'returncode': 2}}
