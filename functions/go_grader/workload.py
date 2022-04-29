@@ -64,6 +64,7 @@ def app_handle(args, state, syscall):
 
                     final_results = []
 
+                    print(compileerr)
                     if compiledtest.returncode != 0:
                         print("DID YOU EVER GET HERE?!?!?!?!??!?!?!?!??!?!?!?!?")
                         print(args["submission"])
