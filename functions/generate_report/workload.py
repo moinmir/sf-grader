@@ -18,12 +18,14 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, context, syscall):
+    print("\n\n\n Hello 1 \n\n\n")
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
+    print("\n\n\n Hello 2 \n\n\n")
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
     delim = config["subtest"]["delim"]
     grade = json.loads(syscall.read_key(bytes(args["grade_report"], "utf-8")))
     grade["tests"] = [test for test in grade["tests"] if test["action"] in ["pass", "fail"]]
-
+    print("\n\n\n Hello 3 \n\n\n")
     correctness_tests = [ test for test in grade["tests"] if not ("performance" in test["conf"] and test["conf"]["performance"])]
     performance_tests = [ test for test in grade["tests"] if ("performance" in test["conf"] and test["conf"]["performance"]) ]
 
@@ -32,7 +34,7 @@ def app_handle(args, context, syscall):
     passed_subtests = len([ test for test in all_subtests if test[1]["action"] == "pass"])
 
     output = []
-
+    print("\n\n\n Hello 4 \n\n\n")
     formatted_submission_ts = datetime.utcfromtimestamp(context["push_date"]).replace(tzinfo=timezone.utc).astimezone(tz=None).strftime('%D %T %z')
     output.append("Submitted %s\n" % formatted_submission_ts)
     output.append("## Grade: %.2f%%" % (grade["grade"] * 100))
