@@ -3,7 +3,7 @@ OUTPUTS=$(patsubst %, output/%.img, $(FUNCTIONS))
 RUNS=$(patsubst %, run/%, $(FUNCTIONS))
 
 .PHONY: all
-all: $(OUTPUTS) #$(RUNS)
+all: $(OUTPUTS) $(RUNS)
 
 output/%.img: functions/%/*
 	@truncate -s 500M $@

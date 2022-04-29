@@ -1,0 +1,15 @@
+{
+  "name": "Secure Object Relational Mapper",
+  "grading_timeout": 180,
+  "subtest": {
+    "delim": "=",
+    "format": "  >     %10s %-40s"
+  },
+  "tests": {
+    "TestNegate": {
+      "desc": "Negate",
+      "points": 10.0
+    }
+  }
+}
+
