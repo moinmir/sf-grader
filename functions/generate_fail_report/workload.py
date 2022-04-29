@@ -19,7 +19,7 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, context, syscall):
-    print("\n\n\n\n========================================")
+    print("\n\n\n\n================================================")
     print("GENERATE FAIL REPORT")
     print("================================================\n\n\n\n")
 
