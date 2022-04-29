@@ -65,8 +65,8 @@ def app_handle(args, state, syscall):
                             print(test_result)
                         tr = json.loads(test_result)     
 
-                        print("\n\n\n========================")
-                        print(tr)
+                        print("\n\n\n========================here")
+                        print(tr)a
                         print("========================\n\n\n")
                         if tr["Action"] in ["pass", "fail", "run"]:
                             tr = dict((name.lower(), val) for name, val in tr.items())
