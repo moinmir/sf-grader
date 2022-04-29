@@ -49,6 +49,7 @@ def app_handle(args, state, syscall):
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                     compileout, compileerr = compiledtest.communicate()
                     if compiledtest.returncode != 0:
+                        print({ "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } })
                         return { "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } }
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json", shell=True,
                             stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
