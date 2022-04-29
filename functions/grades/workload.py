@@ -19,6 +19,7 @@ def app_handle(args, context, syscall):
     print("****************************************************")
     print("hi")
     print(args["test_results"])
+    args["test_results"] = "submission/test_results.jsonl"
     print("****************************************************")
 
     test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results"], "utf-8")).split(b'\n') ]
