@@ -65,6 +65,7 @@ def app_handle(args, state, syscall):
                     final_results = []
 
                     if compiledtest.returncode != 0:
+                        print("DID YOU EVER GET HERE?!?!?!?!??!?!?!?!??!?!?!?!?")
                         out = { "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } }
                         final_results.append(json.dumps(out))
                         key = os.path.join(os.path.splitext(args["submission"])[0], "test_results_fail.jsonl")
