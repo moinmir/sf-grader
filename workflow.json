@@ -1,1 +1,1 @@
-[["go_grader", "grades", "generate_report"], ["go_grader", "generate_fail_report"]]
+["go_grader", "grades", "generate_fail_report"]
