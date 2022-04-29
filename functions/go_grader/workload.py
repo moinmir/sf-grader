@@ -55,15 +55,19 @@ def app_handle(args, state, syscall):
                             stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
                     final_results = []
 
-                    print("\n\n\n========================")
-                    print(testrun.stdout)
-                    print(testrun.stdout[0]["Action"])
-                    print("========================\n\n\n")                    
+                    i = True                     
                     for test_result in testrun.stdout:
+                        if i:
+                            print("\n\n\n========================")
+                            print(test_result) 
+                            i = False
+                        else:
+                            print(test_result)
                         tr = json.loads(test_result)                        
                         if tr["Action"] in ["pass", "fail", "run"]:
                             tr = dict((name.lower(), val) for name, val in tr.items())
                             final_results.append(json.dumps(tr))
+                    print("========================\n\n\n")
                     key = os.path.join(os.path.splitext(args["submission"])[0], "test_results.jsonl")
                     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
                     testrun.wait()
