@@ -39,7 +39,13 @@ def app_handle(args, context, syscall):
     # for i in range(0, test_lines.find(".go")):
         
     
-    print(test_lines[0]['error']['compile'])
+    err = str(test_lines[0]['error']['compile'])
+    
+    err = err[ err.find("/") : ]
+    err = err[ err.find("/") : ]
+    err = err[ err.find("/") : ]
+    
+    print(err)
     print("here 2")
 
     
