@@ -25,8 +25,12 @@ def handle(req, syscall):
         
         print("next_function: " + next_function)
         print("result: " )
-        print("workflow: " +  workflow)
-        print("context: " +  context)
+        print(result)
+        
+        print("workflow: ")
+        print(workflow)
+        print("context: ")
+        print(context)
         
         syscall.invoke(next_function, json.dumps({
             "args": result,
