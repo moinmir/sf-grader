@@ -71,6 +71,11 @@ def app_handle(args, state, syscall):
                     key = os.path.join(os.path.splitext(args["submission"])[0], "test_results.jsonl")
                     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
                     testrun.wait()
+                    print("\n\n\n======================")
+                    print("Reaches end in go_grader")
+                    print(key)
+                    print(final_results)
+                    print("======================\n\n\n")
 
                     if testrun.returncode >= 0:
                         return { "test_results": key }
