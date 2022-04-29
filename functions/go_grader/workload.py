@@ -17,6 +17,8 @@ def handle(req, syscall):
         
     if len(workflow) > 0:
         next_function = workflow.pop(0)
+        print("\n\nNext function: %s" % next_function)
+        print("================================================\n\n\n\n")
         syscall.invoke(next_function, json.dumps({
             "args": result,
             "workflow": workflow,
@@ -27,7 +29,6 @@ def handle(req, syscall):
 def app_handle(args, state, syscall):
     print("\n\n\n\n========================================")
     print("GO GRADER")
-    print("================================================\n\n\n\n")
     os.system("ifconfig lo up")
     # Fetch and untar submission tarball
     assignment = state["metadata"]["assignment"]
@@ -62,15 +63,16 @@ def app_handle(args, state, syscall):
                     final_results = []
 
                     if compiledtest.returncode != 0:
-                        print("COMPILATION FAILED")
+                        print("COMPILATION FAILED\n\n")
                         out = { "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } }
                         final_results.append(json.dumps(out))
+                        print(final_results)
                         key = os.path.join(os.path.splitext(args["submission"])[0], "test_results_fail.jsonl")
                         syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
 
                         return out
-                    print("COMPILATION SUCCEEDED")
-                    print("================================================\n\n\n\n")
+                    print("COMPILATION SUCCEEDED\n\n")
+                    
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json", shell=True,
                             stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
 
@@ -80,7 +82,7 @@ def app_handle(args, state, syscall):
                         if tr["Action"] in ["pass", "fail", "run"]:
                             tr = dict((name.lower(), val) for name, val in tr.items())
                             final_results.append(json.dumps(tr))
-
+                    print(final_results)
                     key = os.path.join(os.path.splitext(args["submission"])[0], "test_results.jsonl")
                     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
                     testrun.wait()
