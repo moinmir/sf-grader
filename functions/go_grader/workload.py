@@ -12,6 +12,7 @@ def handle(req, syscall):
     workflow = req["workflow"]
     result = app_handle(args, context, syscall)
     
+    print(result)
     if "error" in result:
         print(" MARINA IS PRETTY")
         workflow =  req["workflowfail"]
