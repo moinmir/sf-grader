@@ -17,18 +17,13 @@ def handle(req, syscall):
 
 def app_handle(args, context, syscall):
     print("****************************************************")
-    print("hi")
-    print(args["test_results"])
+    print(args)
     args["test_results"] = "submission/test_results.jsonl"
     print("****************************************************")
 
     test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results"], "utf-8")).split(b'\n') ]
-
-    print("\n\n\n Hello 0 in grades")
-
     test_runs = dict((line['test'], line) for line in test_lines if 'test' in line)
-
-    print("\n\n\n Hello 1 in grades")
+    
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
 
     print("\n\n\n Hello 2 in grades")
