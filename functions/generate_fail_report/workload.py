@@ -24,8 +24,11 @@ def handle(req, syscall):
 def app_handle(args, context, syscall):
     print("\n\n\n\n===========================================================================================================================================")
     print("GENERATE FAIL REPORT")
+    print("Args")
     print(args)
+    print("context")
     print(context)
+    print("Syscall")
     print(syscall)
 
     test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results_fail"], "utf-8")).split(b'\n') ]
