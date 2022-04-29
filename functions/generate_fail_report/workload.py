@@ -39,7 +39,7 @@ def app_handle(args, context, syscall):
     # for i in range(0, test_lines.find(".go")):
         
     
-    dict(test_lines)
+    test_lines = dict(test_lines)
     print(test_lines)
     print(test_lines['error']) 
     print(str(test_lines['error']) )    
