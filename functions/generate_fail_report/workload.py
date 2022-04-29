@@ -31,13 +31,17 @@ def app_handle(args, context, syscall):
     print("Syscall")
     print(syscall)
 
+    print("here 1")
     test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results_fail"], "utf-8")).split(b'\n') ]
     # test_runs = dict((line['test'], line) for line in test_lines if 'test' in line)
     
+    print("here 2")
 
     
     output = []
     formatted_submission_ts = datetime.utcfromtimestamp(context["push_date"]).replace(tzinfo=timezone.utc).astimezone(tz=None).strftime('%D %T %z')
+    
+    print("here 3")
     output.append("Submitted %s\n" % formatted_submission_ts)
     output.append("## Compilation error")
 
