@@ -39,21 +39,7 @@ def app_handle(args, context, syscall):
     # for i in range(0, test_lines.find(".go")):
         
     
-    err = str(test_lines[0]['error']['compile'])
-    
-    
-    # example.com/example\\\\n../tmpkx4cs741/example.go:4:9: cannot use !x (type bool) as type int in return argument\\\\n\'", \'returncode\': 2}}']
-
-
-    err = err.split("/")
-    print(err[3])
-    # err = err[ err.find("/") : ]
-    # print(err)
-    # err = err[ err.find("/") : ]
-    # print(err)
-
-    print("here 2")
-
+    err = str(test_lines[0]['error']['compile']).split("/")[3]
     
     output = []
     formatted_submission_ts = datetime.utcfromtimestamp(context["push_date"]).replace(tzinfo=timezone.utc).astimezone(tz=None).strftime('%D %T %z')
@@ -61,9 +47,7 @@ def app_handle(args, context, syscall):
     print("here 3")
     output.append("Submitted %s\n" % formatted_submission_ts)
     output.append("## Compilation error")
-
-    for line in test_lines:
-        output.append("### %s" % (line))
+    output.append("### %s" % (err))
         
     
     # key = "%s-report.md" % os.path.splitext(args["grade_report"])[0]
