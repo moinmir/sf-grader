@@ -82,6 +82,7 @@ def app_handle(args, state, syscall):
                         final_results.append(json.dumps(out))
                         key = os.path.join(os.path.splitext(args["submission"])[0], "test_results_fail.jsonl")
                         syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
+
                         return out
                 
                     print("bro WHATTTTT?")   

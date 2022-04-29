@@ -7,9 +7,6 @@ def handle(req, syscall):
     args = req["args"]
     workflow = req["workflow"]
     context = req["context"]
-    print("\n\n\n\n===========================================================================================================================================")
-    print("GENERATE FAIL REPORT HANDLE")
-
     
     result = app_handle(args, context, syscall)
     if len(workflow) > 0:
@@ -22,7 +19,7 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, context, syscall):
-    print("\n\n\n\n===========================================================================================================================================")
+    print("\n\n\n\n==================================================================================")
     print("GENERATE FAIL REPORT")
     print("Args")
     print(args)
@@ -48,10 +45,9 @@ def app_handle(args, context, syscall):
     output.append("Submitted %s\n" % formatted_submission_ts)
     output.append("## Compilation error")
     output.append("### %s" % (err))
-        
-    
-    # key = "%s-report.md" % os.path.splitext(args["grade_report"])[0]
-    # syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
+
+    key = os.path.join(os.path.dirname(args["test_results"]),"grade.json")
+    syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
 
     print("CONGRATULATIONS YOU KNOW HOW TO RUN CODE.")
     print(output)
