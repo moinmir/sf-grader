@@ -28,7 +28,7 @@ def app_handle(args, context, syscall):
 
     print("\n\n\n Hello 2 in grades")
     print(grader_config)
-    grader_config = "grader/grader_config"
+    grader_config = "example_grader/grader_config"
 
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
 
