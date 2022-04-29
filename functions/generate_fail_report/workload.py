@@ -39,7 +39,7 @@ def app_handle(args, context, syscall):
     # for i in range(0, test_lines.find(".go")):
         
     
-    err = str(test_lines[0]['error']['compile']).split("/")[3]
+    err = str(test_lines[0]['error']['compile']).replace("\\n'", "").split("/")[3]
     
     output = []
     formatted_submission_ts = datetime.utcfromtimestamp(context["push_date"]).replace(tzinfo=timezone.utc).astimezone(tz=None).strftime('%D %T %z')
