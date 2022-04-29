@@ -35,6 +35,11 @@ def app_handle(args, context, syscall):
     test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results_fail"], "utf-8")).split(b'\n') ]
     # test_runs = dict((line['test'], line) for line in test_lines if 'test' in line)
     
+    # print(test_lines)
+    # for i in range(0, test_lines.find(".go")):
+        
+    
+    print(test_lines[ ])
     print("here 2")
 
     
