@@ -7,7 +7,7 @@ def handle(req, syscall):
     args = req["args"]
     workflow = req["workflow"]
     context = req["context"]
-    print("\n\n\n\n===============================")
+    print("\n\n\n\n===========================================================================================================================================")
     print("GENERATE FAIL REPORT HANDLE")
 
     
@@ -22,7 +22,7 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, context, syscall):
-    print("\n\n\n\n===============================")
+    print("\n\n\n\n===========================================================================================================================================")
     print("GENERATE FAIL REPORT")
     print(args)
     print(context)
