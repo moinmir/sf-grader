@@ -22,6 +22,7 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, state, syscall):
+    print("******************************HERE")
     os.system("ifconfig lo up")
     # Fetch and untar submission tarball
     assignment = state["metadata"]["assignment"]
