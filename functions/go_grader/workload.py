@@ -22,6 +22,9 @@ def handle(req, syscall):
         
     if len(workflow) > 0:
         next_function = workflow.pop(0)
+        
+        print(next_function, result, workflow, context)
+        
         syscall.invoke(next_function, json.dumps({
             "args": result,
             "workflow": workflow,
