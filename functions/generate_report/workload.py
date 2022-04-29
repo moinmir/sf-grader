@@ -64,4 +64,6 @@ def app_handle(args, context, syscall):
                 output.append("                               -- test passed --")
     key = "%s-report.md" % os.path.splitext(args["grade_report"])[0]
     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
+
+    print(output)
     return { "report": key }

@@ -50,46 +50,27 @@ def app_handle(args, state, syscall):
                     compileout, compileerr = compiledtest.communicate()
 
                     final_results = []
-                    
+
                     if compiledtest.returncode != 0:
-                        
+                        final_results.append({"action" : "run", "test" : "TestNegate"})
+                        final_results.append({"action" : "uncompiled", "test" : "TestNegate"})
+                        final_results.append({"action" : "fail"})
+
                         print({ "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } })
                         # return { "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } }
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json", shell=True,
                             stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
 
-                    # i = True                     
                     for test_result in testrun.stdout:
-                        # if i:
-                        #     print("\n\n\n========================")
-                        #     print(test_result) 
-                        #     i = False
-                        # else:
-                        #     print(test_result)
                         tr = json.loads(test_result)     
-
-                        # print("\n\n\n========================here")
-                        # print(tr)
-                        # print("========================\n\n\n")
-
-                        # {'Action': 'output', 'Test': 'TestNegate', 'Output': '=== RUN   TestNegate\n'}
 
                         if tr["Action"] in ["pass", "fail", "run"]:
                             tr = dict((name.lower(), val) for name, val in tr.items())
                             final_results.append(json.dumps(tr))
-                    # print("========================\n\n\n")
 
-                    # print("\n\n\n========================here")
-                    # # ['{"action": "run", "test": "TestNegate"}', '{"action": "pass", "test": "TestNegate"}', '{"action": "pass"}']
-                    # print(final_results)
-                    # print("=======================\n\n\n")
                     key = os.path.join(os.path.splitext(args["submission"])[0], "test_results.jsonl")
                     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
                     testrun.wait()
-                    print("\n\n\n========================here")
-                    # ['{"action": "run", "test": "TestNegate"}', '{"action": "pass", "test": "TestNegate"}', '{"action": "pass"}']
-                    print(key)
-                    print("=======================\n\n\n")
                     if testrun.returncode >= 0:
                         return { "test_results": key }
                     else:
