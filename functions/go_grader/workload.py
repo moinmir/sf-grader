@@ -24,7 +24,7 @@ def handle(req, syscall):
         next_function = workflow.pop(0)
         
         print("next_function: " + next_function)
-        print("result: " +  result)
+        print("result: " )
         print("workflow: " +  workflow)
         print("context: " +  context)
         
