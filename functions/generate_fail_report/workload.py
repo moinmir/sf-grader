@@ -7,6 +7,10 @@ def handle(req, syscall):
     args = req["args"]
     workflow = req["workflow"]
     context = req["context"]
+    print("\n\n\n\n===============================")
+    print("GENERATE FAIL REPORT HANDLE")
+
+    
     result = app_handle(args, context, syscall)
     if len(workflow) > 0:
         next_function = workflow.pop(0)
