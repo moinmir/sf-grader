@@ -56,7 +56,12 @@ def app_handle(args, state, syscall):
                     final_results = []
 
                     if compiledtest.returncode != 0:
-                        return { "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } }
+                        out = { "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } }
+                        final_results.append(json.dumps(out))
+                        key = os.path.join(os.path.splitext(args["submission"])[0], "test_results_fail.jsonl")
+                        syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
+                        return out
+                
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json", shell=True,
                             stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
 

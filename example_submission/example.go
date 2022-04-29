@@ -1,5 +1,5 @@
 package example
 
-func Negate(x bool) bool {
+func Negate(x bool) string {
 	return !x
 }

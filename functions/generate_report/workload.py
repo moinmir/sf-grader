@@ -18,14 +18,10 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, context, syscall):
-    print("\n\n\n Hello 1 ")
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
-    print(" Hello 2 ")
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
-    print(" Hello 3 ")
     delim = config["subtest"]["delim"]
     grade = json.loads(syscall.read_key(bytes(args["grade_report"], "utf-8")))
-    print(" Hello 4")
     grade["tests"] = [test for test in grade["tests"] if test["action"] in ["pass", "fail"]]
     correctness_tests = [ test for test in grade["tests"] if not ("performance" in test["conf"] and test["conf"]["performance"])]
     performance_tests = [ test for test in grade["tests"] if ("performance" in test["conf"] and test["conf"]["performance"]) ]
@@ -33,7 +29,6 @@ def app_handle(args, context, syscall):
     tests_passed = len([ test for test in grade["tests"] if test["action"] == "pass"])
     all_subtests = reduce(lambda a,b: list(a) + list(b), map(lambda t: t['subtests'].items(), grade["tests"]), [])
     passed_subtests = len([ test for test in all_subtests if test[1]["action"] == "pass"])
-    print(" Hello 5 \n\n\n")
     output = []
     formatted_submission_ts = datetime.utcfromtimestamp(context["push_date"]).replace(tzinfo=timezone.utc).astimezone(tz=None).strftime('%D %T %z')
     output.append("Submitted %s\n" % formatted_submission_ts)
@@ -67,8 +62,4 @@ def app_handle(args, context, syscall):
     key = "%s-report.md" % os.path.splitext(args["grade_report"])[0]
     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
 
-    print("\n\n\n\n===============================")
-    print("CONGRATULATIONS YOU KNOW HOW TO RUN CODE.")
-    print(output)
-    print("======================================\n\n\n\n")
     return { "report": key }
