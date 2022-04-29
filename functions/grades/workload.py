@@ -29,7 +29,7 @@ def app_handle(args, context, syscall):
     print("\n\n\n Hello 2 in grades")
 
     # example_grader/grader_config
-    #grader/grader_config
+    # grader/grader_config
 
     grader_config = "grader/grader_config"
     print(grader_config)
