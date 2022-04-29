@@ -49,8 +49,8 @@ def app_handle(args, context, syscall):
         output.append("### %s" % (line))
         
     
-    key = "%s-report.md" % os.path.splitext(args["grade_report"])[0]
-    syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
+    # key = "%s-report.md" % os.path.splitext(args["grade_report"])[0]
+    # syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
 
     print("CONGRATULATIONS YOU KNOW HOW TO RUN CODE.")
     print(output)
