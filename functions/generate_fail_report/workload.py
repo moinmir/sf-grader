@@ -41,7 +41,11 @@ def app_handle(args, context, syscall):
     
     err = str(test_lines[0]['error']['compile'])
     
-    err = err.split("/",3)[1]
+    
+    # example.com/example\\\\n../tmpkx4cs741/example.go:4:9: cannot use !x (type bool) as type int in return argument\\\\n\'", \'returncode\': 2}}']
+
+
+    err = err.split("/")
     print(err)
     # err = err[ err.find("/") : ]
     # print(err)
