@@ -8,11 +8,12 @@ def handle(req, syscall):
 
     args = req["args"]
     context = req["context"]
+    workflow = req["workflow"]
     result = app_handle(args, context, syscall)
-    if "error" in result:
-        workflow =  req["workflow_fail"]
-    else:
-        workflow = req["workflow"]
+    # if "error" in result:
+    #     workflow =  req["workflow_fail"]
+    # else:
+    #     workflow = req["workflow"]
         
     if len(workflow) > 0:
         next_function = workflow.pop(0)
