@@ -45,8 +45,10 @@ def app_handle(args, context, syscall):
     output.append("Submitted %s\n" % formatted_submission_ts)
     output.append("## Compilation error")
     output.append("### %s" % (err))
-
-    key = os.path.join(os.path.dirname(args["test_results"]),"grade.json")
+        
+    
+    grade_report_key = os.path.join(os.path.dirname(args["test_results"]),"grade.json")
+    key = "%s-report.md" % os.path.splitext(grade_report_key)[0]
     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
 
     print("CONGRATULATIONS YOU KNOW HOW TO RUN CODE.")
