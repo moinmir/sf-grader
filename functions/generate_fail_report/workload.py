@@ -46,7 +46,7 @@ def app_handle(args, context, syscall):
 
 
     err = err.split("/")
-    print(err)
+    print(err[3])
     # err = err[ err.find("/") : ]
     # print(err)
     # err = err[ err.find("/") : ]
