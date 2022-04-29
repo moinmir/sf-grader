@@ -40,7 +40,6 @@ def app_handle(args, context, syscall):
         
     
     print(test_lines[0])
-    print(test_lines[0].find("compile"))
     print("here 2")
 
     
