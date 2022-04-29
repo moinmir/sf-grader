@@ -63,7 +63,11 @@ def app_handle(args, state, syscall):
                             i = False
                         else:
                             print(test_result)
-                        tr = json.loads(test_result)                        
+                        tr = json.loads(test_result)     
+
+                        print("\n\n\n========================")
+                        print(tr)
+                        print("========================\n\n\n")
                         if tr["Action"] in ["pass", "fail", "run"]:
                             tr = dict((name.lower(), val) for name, val in tr.items())
                             final_results.append(json.dumps(tr))
@@ -85,3 +89,6 @@ def app_handle(args, state, syscall):
 # b'{"Action":"pass","Test":"TestNegate"}\n'
 # b'{"Action":"output","Output":"PASS\\n"}\n'
 # b'{"Action":"pass"}\n'
+
+
+# ^[[A{'error': {'compile': "b'# example.com/example\\n../tmpzhvhm_58/example.go:4:9: cannot use !x (type bool) as type string in return argument\\n'", 'returncode': 2}}
