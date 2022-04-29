@@ -19,7 +19,7 @@ def app_handle(args, context, syscall):
     test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results"], "utf-8")).split(b'\n') ]
     test_runs = dict((line['test'], line) for line in test_lines if 'test' in line)
     
-    grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
+    # grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
 
     print("\n\n\n Hello 2 in grades")
 
@@ -27,7 +27,7 @@ def app_handle(args, context, syscall):
     # grader/grader_config
 
     print(grader_config)
-    # grader_config = "grader/grader_config"
+    grader_config = "example/grader_config"
 
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
 
