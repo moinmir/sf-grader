@@ -1,4 +1,4 @@
-FUNCTIONS=start_assignment gh_repo go_grader grades generate_report
+FUNCTIONS=start_assignment gh_repo go_grader grades generate_report generate_fail_report
 OUTPUTS=$(patsubst %, output/%.img, $(FUNCTIONS))
 RUNS=$(patsubst %, run/%, $(FUNCTIONS))
 
