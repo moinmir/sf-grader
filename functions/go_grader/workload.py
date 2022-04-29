@@ -4,6 +4,7 @@ import os
 import subprocess
 
 def handle(req, syscall):
+    print("hifsa is cool.")
     print("**************** HANDLE **********************************************************************************************************************************HERE")
 
     args = req["args"]
