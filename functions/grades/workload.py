@@ -16,7 +16,13 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, context, syscall):
+    print("****************************************************")
+    print("****************************************************")
+
     test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results"], "utf-8")).split(b'\n') ]
+
+    print("\n\n\n Hello 0 in grades")
+
     test_runs = dict((line['test'], line) for line in test_lines if 'test' in line)
 
     print("\n\n\n Hello 1 in grades")
