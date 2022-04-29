@@ -39,7 +39,7 @@ def app_handle(args, state, syscall):
         submission_tar.write(submission_tar_data)
         submission_tar.flush()
         with tempfile.TemporaryDirectory() as submission_dir:
-            os.system("mkdir %s" % submission_dir)
+            os.system("mkdir -p %s" % submission_dir)
             os.system("tar -C %s -xzf %s --strip-components=1" % (submission_dir, submission_tar.name))
 
             # Fetch and untar grading script tarball
