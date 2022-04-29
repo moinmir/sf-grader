@@ -19,8 +19,14 @@ def app_handle(args, context, syscall):
     test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results"], "utf-8")).split(b'\n') ]
     test_runs = dict((line['test'], line) for line in test_lines if 'test' in line)
 
+    print("\n\n\n Hello 1 in grades")
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
+
+    print("\n\n\n Hello 2 in grades")
+
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
+
+    print("\n\n\n Hello 3 in grades")
 
     total_points = sum([ test["points"] for test in config["tests"].values() if "extraCredit" not in test or not test["extraCredit"]])
 
