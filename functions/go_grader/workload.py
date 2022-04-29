@@ -48,6 +48,9 @@ def app_handle(args, state, syscall):
                     compiledtest = subprocess.Popen("go test -c -o /tmp/grader", shell=True,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                     compileout, compileerr = compiledtest.communicate()
+
+                    final_results = []
+                    
                     if compiledtest.returncode != 0:
                         
                         print({ "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } })
