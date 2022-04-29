@@ -50,7 +50,7 @@ def app_handle(args, state, syscall):
                     compileout, compileerr = compiledtest.communicate()
                     if compiledtest.returncode != 0:
                         print({ "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } })
-                        return { "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } }
+                        # return { "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } }
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json", shell=True,
                             stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
                     final_results = []
@@ -77,3 +77,11 @@ def app_handle(args, state, syscall):
                         _, errlog = testrun.communicate()
                         return { "error": { "testrun": str(errlog), "returncode": testrun.returncode } }
     return {}
+
+
+# b'{"Action":"run","Test":"TestNegate"}\n'
+# b'{"Action":"output","Test":"TestNegate","Output":"=== RUN   TestNegate\\n"}\n'
+# b'{"Action":"output","Test":"TestNegate","Output":"--- PASS: TestNegate (0.00s)\\n"}\n'
+# b'{"Action":"pass","Test":"TestNegate"}\n'
+# b'{"Action":"output","Output":"PASS\\n"}\n'
+# b'{"Action":"pass"}\n'
