@@ -17,6 +17,7 @@ def handle(req, syscall):
 
 def app_handle(args, context, syscall):
     print("****************************************************")
+    print("hi")
     print("****************************************************")
 
     test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results"], "utf-8")).split(b'\n') ]
