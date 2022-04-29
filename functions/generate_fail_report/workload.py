@@ -53,5 +53,6 @@ def app_handle(args, context, syscall):
 
     print("CONGRATULATIONS YOU KNOW HOW TO RUN CODE.")
     print(output)
+    print(key)
     print("======================================\n\n\n\n")
     return { "report": key }
