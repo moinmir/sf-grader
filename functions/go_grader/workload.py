@@ -4,34 +4,19 @@ import os
 import subprocess
 
 def handle(req, syscall):
-    print("hifsa is cool.")
-    print("**************** HANDLE **********************************************************************************************************************************HERE")
-
     args = req["args"]
     context = req["context"]
     workflow = req["workflow"]
     result = app_handle(args, context, syscall)
     
-    print(result)
+    
     if "error" in result:
-        print(" MARINA IS PRETTY")
         workflow =  req["workflowfail"]
     else:
-        print(" MARINA IS UGLY")
         workflow = req["workflow"]
         
     if len(workflow) > 0:
         next_function = workflow.pop(0)
-        
-        print("next_function: " + next_function)
-        print("result: " )
-        print(result)
-        
-        print("workflow: ")
-        print(workflow)
-        print("context: ")
-        print(context)
-        
         syscall.invoke(next_function, json.dumps({
             "args": result,
             "workflow": workflow,
@@ -40,7 +25,9 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, state, syscall):
-    print("**************************************************************************************************************************************************HERE")
+    print("\n\n\n\n========================================")
+    print("GO GRADER")
+    print("================================================\n\n\n\n")
     os.system("ifconfig lo up")
     # Fetch and untar submission tarball
     assignment = state["metadata"]["assignment"]
@@ -76,8 +63,6 @@ def app_handle(args, state, syscall):
 
                     print(compileerr)
                     if compiledtest.returncode != 0:
-                        print("DID YOU EVER GET HERE?!?!?!?!??!?!?!?!??!?!?!?!?")
-                        print(args["submission"])
                         out = { "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } }
                         final_results.append(json.dumps(out))
                         key = os.path.join(os.path.splitext(args["submission"])[0], "test_results_fail.jsonl")
@@ -85,7 +70,6 @@ def app_handle(args, state, syscall):
 
                         return out
                 
-                    print("bro WHATTTTT?")   
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json", shell=True,
                             stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
 

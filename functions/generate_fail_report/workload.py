@@ -19,48 +19,25 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, context, syscall):
-    print("\n\n\n\n==================================================================================")
+    print("\n\n\n\n========================================")
     print("GENERATE FAIL REPORT")
-    print("Args")
-    print(args)
-    print("context")
-    print(context)
-    print("Syscall")
-    print(syscall)
+    print("================================================\n\n\n\n")
 
-    print("here 1")
+    # fetch test results
     test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results_fail"], "utf-8")).split(b'\n') ]
-    # test_runs = dict((line['test'], line) for line in test_lines if 'test' in line)
-    
-    # print(test_lines)
-    # for i in range(0, test_lines.find(".go")):
-        
-    
+
+    # parse error message    
     err = str(test_lines[0]['error']['compile']).replace("\\n'", "").split("/")[3]
     
+    # format output
     output = []
     formatted_submission_ts = datetime.utcfromtimestamp(context["push_date"]).replace(tzinfo=timezone.utc).astimezone(tz=None).strftime('%D %T %z')
-    
-    print("here 3")
     output.append("Submitted %s\n" % formatted_submission_ts)
     output.append("## Compilation error")
     output.append("### %s" % (err))
-        
-    print("dog")
 
-
-    
+    # create report 
     grade_report_key = os.path.join(os.path.dirname(args["test_results_fail"]),"grade.json")
-    
-    print(" cat ")
-    print(grade_report_key)
     key = "%s-report.md" % os.path.splitext(grade_report_key)[0]
-    print(" jackie ")
-    print(key)
     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
-
-    print("CONGRATULATIONS YOU KNOW HOW TO RUN CODE.")
-    print(output)
-    print(key)
-    print("======================================\n\n\n\n")
     return { "report": key }

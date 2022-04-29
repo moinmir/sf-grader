@@ -15,6 +15,9 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, state, syscall):
+    print("\n\n\n\n========================================")
+    print("POST COMMENT")
+    print("================================================\n\n\n\n")
     report = syscall.read_key(bytes(args["report"], "utf-8"))
     api_route = "/repos/%s/commits/%s/comments" % (state["repository"], state["commit"])
     body = {
