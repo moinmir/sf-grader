@@ -4,6 +4,8 @@ import os
 import subprocess
 
 def handle(req, syscall):
+    print("**************** HANDLE **********************************************************************************************************************************HERE")
+
     args = req["args"]
     context = req["context"]
     result = app_handle(args, context, syscall)
@@ -58,9 +60,9 @@ def app_handle(args, state, syscall):
 
                     if compiledtest.returncode != 0:
                         out = { "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } }
-                        # final_results.append(json.dumps(out))
-                        # key = os.path.join(os.path.splitext(args["submission"])[0], "test_results_fail.jsonl")
-                        # syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
+                        final_results.append(json.dumps(out))
+                        key = os.path.join(os.path.splitext(args["submission"])[0], "test_results_fail.jsonl")
+                        syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
                         return out
                 
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json", shell=True,
