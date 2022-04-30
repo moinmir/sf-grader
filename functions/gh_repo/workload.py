@@ -6,7 +6,7 @@ import time
 def handle(req, syscall):
     print("\n\n\n\n========================================")
     print("GH REPO")
-    print("================================================\n\n\n\n")
+   
     key = "github/%s/%s.tgz" % (req["repository"]["full_name"], req["after"])
     meta_key = "github/%s/_meta" % (req["repository"]["full_name"])
     workflow_key = "github/%s/_workflow" % (req["repository"]["full_name"])
@@ -33,6 +33,11 @@ def handle(req, syscall):
                     "metadata": metadata
                 }
             }))
+        
+        print("\n\nFINISHED RUNNING")
+        print("================================================\n\n\n\n")
         return { "written": len(resp.data), "key": key }
     else:
+        print("\n\nFINISHED RUNNING")
+        print("================================================\n\n\n\n")
         return {}
