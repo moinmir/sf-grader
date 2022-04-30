@@ -85,37 +85,37 @@ def app_handle(args, state, syscall):
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json",
                                                shell=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
 
-# {'Action': 'run', 'Test': 'TestNegate'}
-# {'Action': 'output', 'Test': 'TestNegate', 'Output': '=== RUN   TestNegate\n'}
-# {'Action': 'output', 'Test': 'TestNegate', 'Output': '--- FAIL: TestNegate (0.00s)\n'}
+# # {'Action': 'run', 'Test': 'TestNegate'}
+# # {'Action': 'output', 'Test': 'TestNegate', 'Output': '=== RUN   TestNegate\n'}
+# # {'Action': 'output', 'Test': 'TestNegate', 'Output': '--- FAIL: TestNegate (0.00s)\n'}
 
-                    # print("akgnajgn")
-                    # 
+#                     # print("akgnajgn")
+#                     # 
 
 
-                    start_of_run = False 
-                    broken = False
-                    last_tr = None
-                    errMsg = {'Output_Error' : '--- ERROR: Your code TLEs or Panics.\n' }
+#                     start_of_run = False 
+#                     broken = False
+#                     last_tr = None
+#                     errMsg = {'Output_Error' : '--- ERROR: Your code TLEs or Panics.\n' }
 
                     # print(errMsg)
 
                     for test_result in testrun.stdout:
                         tr = json.loads(test_result)
                         last_tr = tr
-                        print(tr)
+                        # print(tr)
 
-                        if tr["Action"] == "run" and start_of_run and broken:
-                            final_results.append(json.dumps(errMsg))
-                            start_of_run = False 
-                            broken = False
+                        # if tr["Action"] == "run" and start_of_run and broken:
+                        #     final_results.append(json.dumps(errMsg))
+                        #     start_of_run = False 
+                        #     broken = False
 
-                        if tr["Action"] == "run" and not start_of_run:
-                            start_of_run = True 
-                            broken = True 
+                        # if tr["Action"] == "run" and not start_of_run:
+                        #     start_of_run = True 
+                        #     broken = True 
                             
-                        if start_of_run and broken and tr["Action"] in ["pass", "fail"]:
-                            broken = False
+                        # if start_of_run and broken and tr["Action"] in ["pass", "fail"]:
+                        #     broken = False
 
                         if tr["Action"] in ["pass", "fail", "run"]:
                             tr = dict((name.lower(), val)
@@ -123,8 +123,8 @@ def app_handle(args, state, syscall):
                             final_results.append(json.dumps(tr))
 
                     
-                    if last_tr["Action"] == "output" and start_of_run and broken:
-                        final_results.append(json.dumps(errMsg))
+                    # if last_tr["Action"] == "output" and start_of_run and broken:
+                    #     final_results.append(json.dumps(errMsg))
 
                     print(final_results)
 

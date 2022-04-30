@@ -24,6 +24,7 @@ def app_handle(args, context, syscall):
     print(args)
     print(context)
     print("\n\n\n\n================================================")
+    
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
     delim = config["subtest"]["delim"]
