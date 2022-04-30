@@ -93,7 +93,7 @@ def app_handle(args, state, syscall):
                     start_of_run = False 
                     broken = False
                     last_tr = None
-                    errMsg = {'Output': '--- ERROR: Your code TLEs or Panics.\n'}
+                    errMsg = dict('Output', '--- ERROR: Your code TLEs or Panics.\n')
                     for test_result in testrun.stdout:
                         tr = json.loads(test_result)
                         last_tr = tr
@@ -118,8 +118,7 @@ def app_handle(args, state, syscall):
 
                     
                     if last_tr["Action"] == "output" and start_of_run and broken:
-                        final_results.append(errMsg)
-
+                        final_results.append(json.dumps(errMsg))
                     print(final_results)
                     key = os.path.join(os.path.splitext(args["submission"])[
                                        0], "test_results.jsonl")
