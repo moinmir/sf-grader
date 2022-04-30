@@ -95,3 +95,7 @@ def app_handle(args, state, syscall):
                         return { "error": { "testrun": str(errlog), "returncode": testrun.returncode } }
     return {}
 
+
+# {'Action': 'run', 'Test': 'TestNegate'}
+# {'Action': 'output', 'Test': 'TestNegate', 'Output': '=== RUN   TestNegate\n'}
+# {'Action': 'output', 'Test': 'TestNegate', 'Output': '--- FAIL: TestNegate (0.00s)\n'}
