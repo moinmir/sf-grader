@@ -56,11 +56,11 @@ def app_handle(args, context, syscall):
         "push_date": context["push_date"]
     }
 
-    for  in test_lines: 
-        print(d)
-        if 'Output_Error' in dict(d[0]): 
-            print("you are here")
-            output['Output_Error'] = test_lines['Output_Error']
+    # for  in test_lines: 
+    #     print(d)
+    #     if 'Output_Error' in dict(d[0]): 
+    #         print("you are here")
+    #         output['Output_Error'] = test_lines['Output_Error']
 
 
     key = os.path.join(os.path.dirname(args["test_results"]),"grade.json")
