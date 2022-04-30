@@ -24,7 +24,7 @@ def app_handle(args, context, syscall):
     
 
     # fetch test results
-    test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results_fail"], "utf-8")).split(b'\n') ]
+    test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results"], "utf-8")).split(b'\n') ]
 
     # parse error message    
     err = str(test_lines[0]['error']['compile']).replace("\\n'", "").split("/")[3]
@@ -37,7 +37,7 @@ def app_handle(args, context, syscall):
     output.append("### %s" % (err))
 
     # create report 
-    grade_report_key = os.path.join(os.path.dirname(args["test_results_fail"]),"grade.json")
+    grade_report_key = os.path.join(os.path.dirname(args["test_results"]),"grade.json")
     key = "%s-report.md" % os.path.splitext(grade_report_key)[0]
     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
 

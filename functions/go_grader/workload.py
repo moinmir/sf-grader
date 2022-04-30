@@ -66,7 +66,7 @@ def app_handle(args, state, syscall):
                         out = { "error": { "compile": str(compileerr), "returncode": compiledtest.returncode } }
                         final_results.append(json.dumps(out))
                         print(final_results)
-                        key = os.path.join(os.path.splitext(args["submission"])[0], "test_results_fail.jsonl")
+                        key = os.path.join(os.path.splitext(args["submission"])[0], "test_results.jsonl")
                         syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
 
                         return out
