@@ -26,15 +26,18 @@ def app_handle(args, context, syscall):
     delim = config["subtest"]["delim"]
     grade = json.loads(syscall.read_key(bytes(args["grade_report"], "utf-8")))
 
-    print("\n\ngrade[\"tests\"]")
-    print(grade["tests"])
+    # print("\n\ngrade[\"tests\"]")
+    # print(grade["tests"])
 
     broken_tests = []
     for i, test in enumerate(grade["tests"]):
         if test["action"] == "run":
-            if (i + 1 < len(grade["tests"]) and grade["tests"][i + 1]["action"] == "run") or len(grade["tests"]) == i + 1:
+            if (i + 1 < len(grade["tests"]) and grade["tests"][i + 1]["action"] == "run"):
+                broken_tests.append(test)
+            if len(grade["tests"]) == 1:
                 broken_tests.append(test)
 
+    print("NOT GOING HERE")
     grade["tests"] = [test for test in grade["tests"] if test["action"] in ["pass", "fail"]]
     correctness_tests = [ test for test in grade["tests"] if not ("performance" in test["conf"] and test["conf"]["performance"])]
     performance_tests = [ test for test in grade["tests"] if ("performance" in test["conf"] and test["conf"]["performance"]) ]
