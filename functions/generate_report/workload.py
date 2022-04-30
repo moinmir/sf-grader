@@ -82,7 +82,7 @@ def app_handle(args, context, syscall):
         output.append("## Broken Tests")
         for i in range(broken_tests):
             output.append("### %d. %s" % (i + 1, broken_tests[i]["conf"]["desc"]) )
-            output.append("                               -- test TLE'd or Panicked --" % test["conf"]["points"])
+            output.append("                               -- test TLE'd or Panicked --" % broken_tests[i]["conf"]["points"])
 
     key = "%s-report.md" % os.path.splitext(args["grade_report"])[0]
     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
