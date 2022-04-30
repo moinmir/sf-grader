@@ -92,8 +92,10 @@ def app_handle(args, state, syscall):
 
                     start_of_run = False 
                     broken = False
+                    last_tr = None 
                     for test_result in testrun.stdout:
                         tr = json.loads(test_result)
+                        last_tr = tr
                         print(tr)
 
                         if tr["Action"] == "run" and start_of_run and broken:
@@ -113,8 +115,9 @@ def app_handle(args, state, syscall):
                             tr = dict((name.lower(), val)
                                       for name, val in tr.items())
                             final_results.append(json.dumps(tr))
+
                     
-                    if tr["Action"] == "run" and start_of_run and broken:
+                    if last_tr["Action"] == "output" and start_of_run and broken:
                         final_results.append("\n MARINA \n")
                         start_of_run = False 
                         broken = False
