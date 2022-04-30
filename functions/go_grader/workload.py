@@ -96,8 +96,8 @@ def app_handle(args, state, syscall):
                     start_of_run = False 
                     broken = False
                     last_tr = None
-                    errMsg = dict(('Output', '--- ERROR: Your code TLEs or Panics.\n'))
-                        
+                    errMsg = {'Output' : '--- ERROR: Your code TLEs or Panics.\n' }
+
                     # print(errMsg)
 
                     for test_result in testrun.stdout:
