@@ -29,10 +29,6 @@ def app_handle(args, context, syscall):
     print("test_runs: %s" % test_runs)
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
 
-    # update grade_config
-    syscall.write_key(bytes(grader_config, "utf-8"),
-                      bytes(json.dumps(example_config), "utf-8"))
-
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
     
     total_points = sum([test["points"] for test in config["tests"].values(

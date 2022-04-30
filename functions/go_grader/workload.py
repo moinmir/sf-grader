@@ -88,6 +88,8 @@ def app_handle(args, state, syscall):
 
                     for test_result in testrun.stdout:
                         tr = json.loads(test_result)
+                        if tr["Action"] == "run":
+                            print(tr)
 
                         if tr["Action"] in ["pass", "fail", "run"]:
                             tr = dict((name.lower(), val)
