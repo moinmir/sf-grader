@@ -21,14 +21,13 @@ def app_handle(args, context, syscall):
     print("\n\n\n\n================================================")
     print("GENERATE REPORT")
 
-    print(args)
-    print(context)
-    print("\n\n\n\n================================================")
-    
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
     delim = config["subtest"]["delim"]
     grade = json.loads(syscall.read_key(bytes(args["grade_report"], "utf-8")))
+
+    print("\n\ngrade[\"tests\"]")
+    print(grade["tests"])
     grade["tests"] = [test for test in grade["tests"] if test["action"] in ["pass", "fail"]]
     correctness_tests = [ test for test in grade["tests"] if not ("performance" in test["conf"] and test["conf"]["performance"])]
     performance_tests = [ test for test in grade["tests"] if ("performance" in test["conf"] and test["conf"]["performance"]) ]
