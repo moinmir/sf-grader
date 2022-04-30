@@ -32,7 +32,7 @@ def app_handle(args, context, syscall):
     broken_tests = []
     for i, test in enumerate(grade["tests"]):
         if test["action"] == "run":
-            if i + 1 < len(grade["tests"]) and grade["tests"][i + 1]["action"] == "run":
+            if (i + 1 < len(grade["tests"]) and grade["tests"][i + 1]["action"] == "run") or len(grade["tests"]) == i + 1:
                 broken_tests.append(test)
 
     grade["tests"] = [test for test in grade["tests"] if test["action"] in ["pass", "fail"]]
