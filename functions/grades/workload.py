@@ -18,25 +18,6 @@ def handle(req, syscall):
 
 
 def app_handle(args, context, syscall):
-    example_config = {
-        "name": "Secure Object Relational Mapper",
-        "grading_timeout": 180,
-        "subtest": {
-            "delim": "=",
-            "format": "  >     %10s %-40s"
-        },
-        "tests": {
-            "TestSecondNegate": {
-                "desc": "Negate",
-                "points": 10.0
-            },
-            "TestSecondNegateTA": {
-                "desc": "Negate",
-                "points": 10.0
-            }
-        }
-    }
-
     print("\n\n\n\n========================================\n")
     print("Function: GRADES")
     print(args["test_results"])
