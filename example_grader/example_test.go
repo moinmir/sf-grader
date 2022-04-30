@@ -11,9 +11,8 @@ func TestNegate(t *testing.T) {
 	}
 }
 
-func TestSomething(t *testing.T) {
-	if example.Negate(true) {
+func TestCorrect(t *testing.T) {
+	if example.NegateCorrect(true) {
 		t.Errorf("Expected false, was true")
 	}
 }
-

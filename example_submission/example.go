@@ -3,9 +3,9 @@ package example
 //==================================================
 // This compiles
 //==================================================
-// func Negate(x bool) bool {
-// 	return !x
-// }
+func NegateCorrect(x bool) bool {
+	return !x
+}
 
 //==================================================
 // This doesn't compile
