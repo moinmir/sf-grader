@@ -75,6 +75,10 @@ def app_handle(args, state, syscall):
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json", shell=True,
                             stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
 
+                    for test_result in testrun.stderr:
+                        print("hi ya")
+                        print(test_result)
+
                     for test_result in testrun.stdout:
                         tr = json.loads(test_result)
                         print(tr)   
@@ -107,3 +111,14 @@ def app_handle(args, state, syscall):
 # {'Action': 'pass', 'Test': 'TestNegate'}
 # {'Action': 'output', 'Output': 'PASS\n'}
 # {'Action': 'pass'}
+
+
+
+
+# {'Action': 'run', 'Test': 'TestNegate'}
+# {'Action': 'output', 'Test': 'TestNegate', 'Output': '=== RUN   TestNegate\n'}
+# {'Action': 'output', 'Test': 'TestNegate', 'Output': '    example_test.go:10: Expected false, was true\n'}
+# {'Action': 'output', 'Test': 'TestNegate', 'Output': '--- FAIL: TestNegate (0.00s)\n'}
+# {'Action': 'fail', 'Test': 'TestNegate'}
+# {'Action': 'output', 'Output': 'FAIL\n'}
+# {'Action': 'fail'}
