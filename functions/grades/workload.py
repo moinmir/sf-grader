@@ -56,8 +56,9 @@ def app_handle(args, context, syscall):
         "push_date": context["push_date"]
     }
 
-    for dict in test_lines: 
-        if 'Output_Error' in dict(dict[0]): 
+    for  in test_lines: 
+        print(d)
+        if 'Output_Error' in dict(d[0]): 
             print("you are here")
             output['Output_Error'] = test_lines['Output_Error']
 
