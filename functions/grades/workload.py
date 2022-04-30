@@ -23,11 +23,22 @@ def app_handle(args, context, syscall):
     test_runs = dict((line['test'], line) for line in test_lines if 'test' in line)
     
     print("--- YOU IS HERE -------")
-    # [{'action': 'run', 'test': 'TestNegate'}]
     print(test_lines)
 
-    # {'TestNegate': {'action': 'run', 'test': 'TestNegate'}}
     print(test_runs)
+
+    # panic 
+    # [{'action': 'run', 'test': 'TestNegate'}]
+    # {'TestNegate': {'action': 'run', 'test': 'TestNegate'}}
+
+    # COMPILING CODE.
+    # [{'action': 'run', 'test': 'TestNegate'}, {'action': 'pass', 'test': 'TestNegate'}, {'action': 'pass'}]
+    # {'TestNegate': {'action': 'pass', 'test': 'TestNegate'}}
+
+    # Compiling and panicking code:
+    # [{'action': 'run', 'test': 'SecondNegate'}, {'action': 'run', 'test': 'TestNegate'}, {'action': 'pass', 'test': 'TestNegate'}, {'action': 'pass'}, {'action': 'run', 'test': 'ThirdNegate'}]
+
+
     print("----------")
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
 
