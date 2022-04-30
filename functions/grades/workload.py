@@ -23,10 +23,10 @@ def app_handle(args, context, syscall):
     test_runs = dict((line['test'], line) for line in test_lines if 'test' in line)
     
     print("--- YOU IS HERE -------")
+    # [{'action': 'run', 'test': 'TestNegate'}]
     print(test_lines)
-    # [{'action': 'run', 'test': 'TestNegate'}, {'Output_Error': '--- ERROR: Your code TLEs or Panics.\n'}]
 
-
+    # {'TestNegate': {'action': 'run', 'test': 'TestNegate'}}
     print(test_runs)
     print("----------")
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
@@ -55,13 +55,6 @@ def app_handle(args, context, syscall):
         "tests": tests,
         "push_date": context["push_date"]
     }
-
-    # for  in test_lines: 
-    #     print(d)
-    #     if 'Output_Error' in dict(d[0]): 
-    #         print("you are here")
-    #         output['Output_Error'] = test_lines['Output_Error']
-
 
     key = os.path.join(os.path.dirname(args["test_results"]),"grade.json")
     syscall.write_key(bytes(key, "utf-8"), bytes(json.dumps(output), "utf-8"))
