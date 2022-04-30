@@ -85,12 +85,29 @@ def app_handle(args, state, syscall):
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json",
                                                shell=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
 
-                    broken = True
+# {'Action': 'run', 'Test': 'TestNegate'}
+# {'Action': 'output', 'Test': 'TestNegate', 'Output': '=== RUN   TestNegate\n'}
+# {'Action': 'output', 'Test': 'TestNegate', 'Output': '--- FAIL: TestNegate (0.00s)\n'}
+
+
+                    start_of_run = False 
+                    broken = False
+                    
                     for test_result in testrun.stdout:
                         tr = json.loads(test_result)
                         print(tr)
 
-                        if broken and tr["Action"] in ["pass", "fail"]:
+                        if tr["Action"] == "run" and start_of_run and broken:
+                            #  output 
+                            final_results.append("\n MARINA \n")
+
+                        
+                        if tr["Action"] == "run" and not start_of_run:
+                            start_of_run = True 
+                            broken = True 
+
+                            
+                        if start_of_run and broken and tr["Action"] in ["pass", "fail"]:
                             broken = False
 
                         if tr["Action"] in ["pass", "fail", "run"]:
