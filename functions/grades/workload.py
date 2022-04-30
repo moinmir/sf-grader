@@ -56,8 +56,9 @@ def app_handle(args, context, syscall):
         "push_date": context["push_date"]
     }
 
-    if 'Output_Error' in test_runs: 
-        output['Output_Error'] = test_runs['Output_Error']
+    if 'Output_Error' in test_lines: 
+        print("you are here")
+        output['Output_Error'] = test_lines['Output_Error']
 
 
     key = os.path.join(os.path.dirname(args["test_results"]),"grade.json")
