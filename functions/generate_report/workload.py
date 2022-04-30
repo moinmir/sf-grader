@@ -18,6 +18,8 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, context, syscall):
+    print("\n\n\n\n========================================")
+    print("Function: GENERATE REPORT\n")
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
     delim = config["subtest"]["delim"]
@@ -79,4 +81,7 @@ def app_handle(args, context, syscall):
     key = "%s-report.md" % os.path.splitext(args["grade_report"])[0]
     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
     
+    print("\nOutput:")
+    print(output)
+
     return { "report": key }

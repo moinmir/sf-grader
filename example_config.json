@@ -6,12 +6,8 @@
       "format": "  >     %10s %-40s"
     },
     "tests": {
-      "TestNegate": {
+      "SecondNegate": {
         "desc": "Negate",
-        "points": 10.0
-      },
-      "TestNegateTwo": {
-        "desc": "Second Negate",
         "points": 10.0
       }
     }
