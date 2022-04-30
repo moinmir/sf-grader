@@ -24,6 +24,6 @@ package example
 // cannot use !x (type bool) as type int in return argument
 func Negate(x bool) bool {
 
-	panic()
+	panic("hello")
 	return !x
 }
