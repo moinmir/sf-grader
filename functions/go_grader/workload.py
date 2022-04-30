@@ -76,7 +76,8 @@ def app_handle(args, state, syscall):
                             stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
 
                     for test_result in testrun.stdout:
-                        tr = json.loads(test_result)     
+                        tr = json.loads(test_result)
+                        print(tr)   
 
                         if tr["Action"] in ["pass", "fail", "run"]:
                             tr = dict((name.lower(), val) for name, val in tr.items())
