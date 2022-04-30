@@ -48,7 +48,9 @@ def app_handle(args, state, syscall):
                 script_tar_data = syscall.read_key(
                     bytes("cos316/%s/grading_script" % assignment, "utf-8"))
 
+                print("script_tar_data")
                 print(str(script_tar_data, "utf-8"))
+                print("script_tar_data")
 
                 script_tar.write(script_tar_data)
                 script_tar.flush()
