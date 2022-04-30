@@ -1,6 +1,7 @@
 import os
 import json
 
+
 def handle(req, syscall):
     args = req["args"]
     workflow = req["workflow"]
@@ -15,26 +16,54 @@ def handle(req, syscall):
         }))
     return result
 
+
 def app_handle(args, context, syscall):
+    example_config = {
+        "name": "Secure Object Relational Mapper",
+        "grading_timeout": 180,
+        "subtest": {
+            "delim": "=",
+            "format": "  >     %10s %-40s"
+        },
+        "tests": {
+            "TestSecondNegate": {
+                "desc": "Negate",
+                "points": 10.0
+            },
+            "TestSecondNegateTA": {
+                "desc": "Negate",
+                "points": 10.0
+            }
+        }
+    }
+
     print("\n\n\n\n========================================\n")
-    print("Function: GRADES")    
-    test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results"], "utf-8")).split(b'\n') ]
-    test_runs = dict((line['test'], line) for line in test_lines if 'test' in line)
+    print("Function: GRADES")
+    test_lines = [json.loads(line) for line in syscall.read_key(
+        bytes(args["test_results"], "utf-8")).split(b'\n')]
+    test_runs = dict((line['test'], line)
+                     for line in test_lines if 'test' in line)
     print("test_runs: %s" % test_runs)
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
+
+    # update grade_config
+    syscall.write_key(bytes(grader_config, "utf-8"),
+                      bytes(json.dumps(example_config), "utf-8"))
 
     print(grader_config)
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
     print(config["tests"])
 
-    total_points = sum([ test["points"] for test in config["tests"].values() if "extraCredit" not in test or not test["extraCredit"]])
+    total_points = sum([test["points"] for test in config["tests"].values(
+    ) if "extraCredit" not in test or not test["extraCredit"]])
 
     tests = []
     for (test_name, conf) in config["tests"].items():
         if test_name in test_runs:
             test = test_runs[test_name].copy()
             test["conf"] = conf
-            test["subtests"] = { key:val for key, val in test_runs.items() if key.startswith("%s/" % test_name) }
+            test["subtests"] = {key: val for key, val in test_runs.items(
+            ) if key.startswith("%s/" % test_name)}
             tests.append(test)
 
     points = 0.0
@@ -50,9 +79,8 @@ def app_handle(args, context, syscall):
         "push_date": context["push_date"]
     }
 
-    key = os.path.join(os.path.dirname(args["test_results"]),"grade.json")
+    key = os.path.join(os.path.dirname(args["test_results"]), "grade.json")
     syscall.write_key(bytes(key, "utf-8"), bytes(json.dumps(output), "utf-8"))
-
 
     print("\nFINISHED RUNNING")
     print("================================================\n\n\n\n")
@@ -60,4 +88,4 @@ def app_handle(args, context, syscall):
     return {
         "grade": points / total_points,
         "grade_report": key
-        }
+    }
