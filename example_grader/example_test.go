@@ -11,7 +11,7 @@ func TestSecondNegate(t *testing.T) {
 	}
 }
 
-func TestSecondNegateTA(t *testing.T) {
+func TestSomething(t *testing.T) {
 	if example.Negate(true) {
 		t.Errorf("Expected false, was true")
 	}
