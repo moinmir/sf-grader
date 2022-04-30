@@ -10,7 +10,7 @@
         "desc": "Negate",
         "points": 10.0
       },
-      "TestNegateTow": {
+      "TestNegateTwo": {
         "desc": "Second Negate",
         "points": 10.0
       }
