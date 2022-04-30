@@ -24,7 +24,7 @@ def app_handle(args, context, syscall):
     
     print("--- YOU IS HERE -------")
     print(test_lines)
-    # [{'action': 'run', 'test': 'TestNegate'}, {'Output': '--- ERROR: Your code TLEs or Panics.\n'}]
+    # [{'action': 'run', 'test': 'TestNegate'}, {'Output_Error': '--- ERROR: Your code TLEs or Panics.\n'}]
 
 
     print(test_runs)
@@ -57,7 +57,7 @@ def app_handle(args, context, syscall):
     }
 
     for dict in test_lines: 
-        if 'Output_Error' in dict[0]: 
+        if 'Output_Error' in dict(dict[0]): 
             print("you are here")
             output['Output_Error'] = test_lines['Output_Error']
 
