@@ -56,6 +56,10 @@ def app_handle(args, context, syscall):
         "push_date": context["push_date"]
     }
 
+    if 'Output_Error' in test_runs: 
+        output['Output_Error'] = test_runs['Output_Error']
+
+
     key = os.path.join(os.path.dirname(args["test_results"]),"grade.json")
     syscall.write_key(bytes(key, "utf-8"), bytes(json.dumps(output), "utf-8"))
 

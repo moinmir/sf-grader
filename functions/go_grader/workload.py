@@ -96,7 +96,7 @@ def app_handle(args, state, syscall):
                     start_of_run = False 
                     broken = False
                     last_tr = None
-                    errMsg = {'Output' : '--- ERROR: Your code TLEs or Panics.\n' }
+                    errMsg = {'Output_Error' : '--- ERROR: Your code TLEs or Panics.\n' }
 
                     # print(errMsg)
 
