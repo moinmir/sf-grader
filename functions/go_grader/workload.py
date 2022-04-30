@@ -90,14 +90,14 @@ def app_handle(args, state, syscall):
 # {'Action': 'output', 'Test': 'TestNegate', 'Output': '--- FAIL: TestNegate (0.00s)\n'}
 
                     # print("akgnajgn")
-                    # errMsg = dict(('Output', '--- ERROR: Your code TLEs or Panics.\n'))
+                    # 
 
 
                     start_of_run = False 
                     broken = False
                     last_tr = None
-                    errMsg = "Agagag"
-    
+                    errMsg = dict(('Output', '--- ERROR: Your code TLEs or Panics.\n'))
+                        
                     # print(errMsg)
 
                     for test_result in testrun.stdout:
