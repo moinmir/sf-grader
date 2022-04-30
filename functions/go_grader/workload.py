@@ -83,7 +83,7 @@ def app_handle(args, state, syscall):
                         tr = json.loads(test_result)
                         print(tr)
 
-                        # if ["pass", "fail"]   
+                        # if "pass" not in tr or ""  
 
                         if tr["Action"] in ["pass", "fail", "run"]:
                             tr = dict((name.lower(), val) for name, val in tr.items())
