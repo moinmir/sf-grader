@@ -84,6 +84,7 @@ def app_handle(args, context, syscall):
             output.append("### %d. %s" % (i + 1, test["conf"]["desc"]) )
             output.append("                               -- test TLE'd or Panicked --" % test["conf"]["points"])
 
+    print("After broken tests")
     key = "%s-report.md" % os.path.splitext(args["grade_report"])[0]
     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
     
