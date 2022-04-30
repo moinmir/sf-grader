@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestSecondNegate(t *testing.T) {
+func TestNegate(t *testing.T) {
 	if example.Negate(true) {
 		t.Errorf("Expected false, was true")
 	}
