@@ -24,6 +24,7 @@ def app_handle(args, context, syscall):
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
 
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
+    print(config["tests"])
 
     total_points = sum([ test["points"] for test in config["tests"].values() if "extraCredit" not in test or not test["extraCredit"]])
 
