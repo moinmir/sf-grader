@@ -90,6 +90,7 @@ def app_handle(args, state, syscall):
                         return { "test_results": key }
                     else:
                         _, errlog = testrun.communicate()
+                        print("Error log:")
                         print(errlog)
                         return { "error": { "testrun": str(errlog), "returncode": testrun.returncode } }
     return {}
