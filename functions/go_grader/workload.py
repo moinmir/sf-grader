@@ -9,7 +9,6 @@ def handle(req, syscall):
     workflow = req["workflow"]
     result = app_handle(args, context, syscall)
     
-    # Need to test if this is working
     if "error" in result and "compile" in result["error"]:
         workflow =  req["workflowfail"]
     else:
