@@ -39,6 +39,8 @@ def app_handle(args, context, syscall):
 
     print("\n\n\n\n========================================\n")
     print("Function: GRADES")
+    print(args["test_results"])
+    
     test_lines = [json.loads(line) for line in syscall.read_key(
         bytes(args["test_results"], "utf-8")).split(b'\n')]
     test_runs = dict((line['test'], line)
@@ -50,10 +52,8 @@ def app_handle(args, context, syscall):
     syscall.write_key(bytes(grader_config, "utf-8"),
                       bytes(json.dumps(example_config), "utf-8"))
 
-    print(grader_config)
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
-    print(config["tests"])
-
+    
     total_points = sum([test["points"] for test in config["tests"].values(
     ) if "extraCredit" not in test or not test["extraCredit"]])
 
