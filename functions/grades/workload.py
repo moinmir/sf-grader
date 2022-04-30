@@ -16,30 +16,11 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, context, syscall):
-    print("\n\n\n\n========================================")
-    print("GRADES")
-    
+    print("\n\n\n\n========================================\n")
+    print("Function: GRADES")    
     test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results"], "utf-8")).split(b'\n') ]
     test_runs = dict((line['test'], line) for line in test_lines if 'test' in line)
     
-    print("--- YOU IS HERE -------")
-    print(test_lines)
-
-    print(test_runs)
-
-    # panic 
-    # [{'action': 'run', 'test': 'TestNegate'}]
-    # {'TestNegate': {'action': 'run', 'test': 'TestNegate'}}
-
-    # COMPILING CODE.
-    # [{'action': 'run', 'test': 'TestNegate'}, {'action': 'pass', 'test': 'TestNegate'}, {'action': 'pass'}]
-    # {'TestNegate': {'action': 'pass', 'test': 'TestNegate'}}
-
-    # Compiling and panicking code:
-    # [{'action': 'run', 'test': 'SecondNegate'}, {'action': 'run', 'test': 'TestNegate'}, {'action': 'pass', 'test': 'TestNegate'}, {'action': 'pass'}, {'action': 'run', 'test': 'ThirdNegate'}]
-
-
-    print("----------")
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
 
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
@@ -70,9 +51,9 @@ def app_handle(args, context, syscall):
     key = os.path.join(os.path.dirname(args["test_results"]),"grade.json")
     syscall.write_key(bytes(key, "utf-8"), bytes(json.dumps(output), "utf-8"))
 
-    print("Output:")
+    print("Output:\n")
     print(output)
-    print("FINISHED RUNNING")
+    print("\nFINISHED RUNNING")
     print("================================================\n\n\n\n")
 
     return {

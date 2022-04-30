@@ -18,10 +18,7 @@ def handle(req, syscall):
         }))
     return result
 
-def app_handle(args, context, syscall):
-    print("\n\n\n\n================================================")
-    print("GENERATE FAIL REPORT")
-    
+def app_handle(args, context, syscall):    
 
     # fetch test results
     test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results"], "utf-8")).split(b'\n') ]
@@ -41,8 +38,4 @@ def app_handle(args, context, syscall):
     key = "%s-report.md" % os.path.splitext(grade_report_key)[0]
     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
 
-    print("Output:")
-    print(output)
-    print("\n\nFINISHED RUNNING")
-    print("================================================\n\n\n\n")
     return { "report": key }

@@ -18,16 +18,10 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, context, syscall):
-    print("\n\n\n\n================================================")
-    print("GENERATE REPORT")
-
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
     delim = config["subtest"]["delim"]
     grade = json.loads(syscall.read_key(bytes(args["grade_report"], "utf-8")))
-
-    # print("\n\ngrade[\"tests\"]")
-    # print(grade["tests"])
 
     broken_tests = []
     for i, test in enumerate(grade["tests"]):
@@ -66,7 +60,6 @@ def app_handle(args, context, syscall):
         else:
             output.append("                               -- test passed --")
 
-    print(len(performance_tests))
     if len(performance_tests) > 0:
         output.append("## Performance Tests")
         for i, test in enumerate(performance_tests):
@@ -76,23 +69,14 @@ def app_handle(args, context, syscall):
             else:
                 output.append("                               -- test passed --")
                 
-    print("NOT GOING HERE")
-    print(broken_tests)
+    
     if len(broken_tests) > 0:
-        print("hello 1")
         output.append("## Broken Tests")
         for i in range(0, len(broken_tests)):
-            print("hello 2")
             output.append("### %d. %s" % (i + 1, broken_tests[i]["conf"]["desc"]) )
-            print("hello 3")
             output.append("                               -- test TLE'd or Panicked (-%d) --" % broken_tests[i]["conf"]["points"])
-            print("hello 4")
 
     key = "%s-report.md" % os.path.splitext(args["grade_report"])[0]
     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
     
-    print("Output:")
-    print(output)
-    print("\n\nFINISHED RUNNING")
-    print("================================================\n\n\n\n")
     return { "report": key }
