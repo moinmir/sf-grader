@@ -89,13 +89,17 @@ def app_handle(args, state, syscall):
 # {'Action': 'output', 'Test': 'TestNegate', 'Output': '=== RUN   TestNegate\n'}
 # {'Action': 'output', 'Test': 'TestNegate', 'Output': '--- FAIL: TestNegate (0.00s)\n'}
 
+                    # print("akgnajgn")
+                    # errMsg = dict(('Output', '--- ERROR: Your code TLEs or Panics.\n'))
+
 
                     start_of_run = False 
                     broken = False
                     last_tr = None
-                    # print("akgnajgn")
-                    errMsg = dict(('Output', '--- ERROR: Your code TLEs or Panics.\n'))
+                    errMsg = "Agagag"
+    
                     # print(errMsg)
+
                     for test_result in testrun.stdout:
                         tr = json.loads(test_result)
                         last_tr = tr
@@ -121,7 +125,9 @@ def app_handle(args, state, syscall):
                     
                     if last_tr["Action"] == "output" and start_of_run and broken:
                         final_results.append(json.dumps(errMsg))
+
                     print(final_results)
+
                     key = os.path.join(os.path.splitext(args["submission"])[
                                        0], "test_results.jsonl")
                     syscall.write_key(bytes(key, "utf-8"),
@@ -135,25 +141,3 @@ def app_handle(args, state, syscall):
                         print(errlog)
                         return {"error": {"testrun": str(errlog), "returncode": testrun.returncode}}
     return {}
-
-
-# {'Action': 'run', 'Test': 'TestNegate'}
-# {'Action': 'output', 'Test': 'TestNegate', 'Output': '=== RUN   TestNegate\n'}
-# {'Action': 'output', 'Test': 'TestNegate', 'Output': '--- FAIL: TestNegate (0.00s)\n'}
-
-
-# {'Action': 'run', 'Test': 'TestNegate'}
-# {'Action': 'output', 'Test': 'TestNegate', 'Output': '=== RUN   TestNegate\n'}
-# {'Action': 'output', 'Test': 'TestNegate', 'Output': '--- PASS: TestNegate (0.00s)\n'}
-# {'Action': 'pass', 'Test': 'TestNegate'}
-# {'Action': 'output', 'Output': 'PASS\n'}
-# {'Action': 'pass'}
-
-
-# {'Action': 'run', 'Test': 'TestNegate'}
-# {'Action': 'output', 'Test': 'TestNegate', 'Output': '=== RUN   TestNegate\n'}
-# {'Action': 'output', 'Test': 'TestNegate', 'Output': '    example_test.go:10: Expected false, was true\n'}
-# {'Action': 'output', 'Test': 'TestNegate', 'Output': '--- FAIL: TestNegate (0.00s)\n'}
-# {'Action': 'fail', 'Test': 'TestNegate'}
-# {'Action': 'output', 'Output': 'FAIL\n'}
-# {'Action': 'fail'}
