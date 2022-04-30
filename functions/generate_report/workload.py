@@ -77,8 +77,10 @@ def app_handle(args, context, syscall):
                 output.append("                               -- test passed --")
                 
     print("NOT GOING HERE")
-    print(len(broken_tests))
+    print(broken_tests)
     if len(broken_tests) > 0:
+        print("hello 1")
+        print(broken_tests)
         output.append("## Broken Tests")
         for i in range(broken_tests):
             output.append("### %d. %s" % (i + 1, broken_tests[i]["conf"]["desc"]) )
