@@ -22,6 +22,8 @@ package example
 // }
 
 // cannot use !x (type bool) as type int in return argument
-func Negate(x bool) byte {
+func Negate(x bool) bool {
+
+	panic()
 	return !x
 }
