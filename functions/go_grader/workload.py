@@ -92,20 +92,19 @@ def app_handle(args, state, syscall):
 
                     start_of_run = False 
                     broken = False
-                    
                     for test_result in testrun.stdout:
                         tr = json.loads(test_result)
                         print(tr)
 
                         if tr["Action"] == "run" and start_of_run and broken:
-                            #  output 
                             final_results.append("\n MARINA \n")
+                            start_of_run = False 
+                            broken = False
 
                         
                         if tr["Action"] == "run" and not start_of_run:
                             start_of_run = True 
                             broken = True 
-
                             
                         if start_of_run and broken and tr["Action"] in ["pass", "fail"]:
                             broken = False
