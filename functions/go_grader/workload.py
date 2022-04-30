@@ -73,6 +73,8 @@ def app_handle(args, state, syscall):
                         out = {"error": {"compile": str(
                             compileerr), "returncode": compiledtest.returncode}}
                         final_results.append(json.dumps(out))
+                        print("Output:")
+                        print(final_results)
                         key = os.path.join(os.path.splitext(args["submission"])[
                                            0], "test_results.jsonl")
                         syscall.write_key(
@@ -83,7 +85,6 @@ def app_handle(args, state, syscall):
 
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json",
                                                shell=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
-
 
                     for test_result in testrun.stdout:
                         tr = json.loads(test_result)
@@ -100,7 +101,7 @@ def app_handle(args, state, syscall):
                     testrun.wait()
                     print("Output:")
                     print(final_results)
-                    if testrun.returncode >= 0:    
+                    if testrun.returncode >= 0:
                         return {"test_results": key}
                     else:
                         _, errlog = testrun.communicate()
