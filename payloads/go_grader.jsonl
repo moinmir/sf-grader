@@ -1,1 +1,1 @@
-{"args": {"submission": "submission.tgz"}, "workflow": [ "grades", "generate_report" ],  "workflowfail": [ "generate_fail_report" ], "context": { "metadata": {"assignment": "example"}}}
+{"args": {"submission": "submission.tgz"}, "workflow": [ "grades", "generate_report" ],  "workflowfail": [ "generate_fail_report" ], "context": { "metadata": {"assignment": "example"}, "push_date": 1651250957}}
