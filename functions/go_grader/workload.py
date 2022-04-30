@@ -114,6 +114,11 @@ def app_handle(args, state, syscall):
                                       for name, val in tr.items())
                             final_results.append(json.dumps(tr))
                     
+                    if tr["Action"] == "run" and start_of_run and broken:
+                        final_results.append("\n MARINA \n")
+                        start_of_run = False 
+                        broken = False
+
                     print(final_results)
                     key = os.path.join(os.path.splitext(args["submission"])[
                                        0], "test_results.jsonl")
