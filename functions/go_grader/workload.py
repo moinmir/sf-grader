@@ -18,6 +18,7 @@ def handle(req, syscall):
     if len(workflow) > 0:
         next_function = workflow.pop(0)
         print("\nNext function in workflow: %s\n" % next_function)
+        print("========================================\n\n\n\n")
         syscall.invoke(next_function, json.dumps({
             "args": result,
             "workflow": workflow,
@@ -78,7 +79,7 @@ def app_handle(args, state, syscall):
                             bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
 
                         return out
-                    print("COMPILATION SUCCEEDED\n\n")
+                    print("COMPILATION SUCCEEDED\n")
 
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json",
                                                shell=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
@@ -97,7 +98,9 @@ def app_handle(args, state, syscall):
                     syscall.write_key(bytes(key, "utf-8"),
                                       bytes('\n'.join(final_results), "utf-8"))
                     testrun.wait()
-                    if testrun.returncode >= 0:
+                    print("Output:")
+                    print(final_results)
+                    if testrun.returncode >= 0:    
                         return {"test_results": key}
                     else:
                         _, errlog = testrun.communicate()
