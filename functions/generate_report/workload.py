@@ -37,7 +37,6 @@ def app_handle(args, context, syscall):
             if len(grade["tests"]) == 1:
                 broken_tests.append(test)
 
-    print("NOT GOING HERE")
     grade["tests"] = [test for test in grade["tests"] if test["action"] in ["pass", "fail"]]
     correctness_tests = [ test for test in grade["tests"] if not ("performance" in test["conf"] and test["conf"]["performance"])]
     performance_tests = [ test for test in grade["tests"] if ("performance" in test["conf"] and test["conf"]["performance"]) ]
@@ -67,6 +66,7 @@ def app_handle(args, context, syscall):
         else:
             output.append("                               -- test passed --")
 
+    print(len(performance_tests))
     if len(performance_tests) > 0:
         output.append("## Performance Tests")
         for i, test in enumerate(performance_tests):
@@ -75,7 +75,9 @@ def app_handle(args, context, syscall):
                 output.append("                               -- test failed (-%d) --" % test["conf"]["points"])
             else:
                 output.append("                               -- test passed --")
-
+                
+    print("NOT GOING HERE")
+    print(len(broken_tests))
     if len(broken_tests) > 0:
         output.append("## Broken Tests")
         for i, test in enumerate(broken_tests):
