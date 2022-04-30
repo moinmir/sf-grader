@@ -28,8 +28,16 @@ func Negate(x bool) bool {
 // 	return !x
 // }
 
-// GENERATE REPORT
 // Output:
-// ['Submitted 01/21/22 20:56:47 +0000\n', '## Grade: 0.00%', '  * 0 points of a possible 10', '  * Passed   0 / 0  tests     (0 failed)', '    * // Passed  0 / 0 subtests  (0 failed)', '## Correctness Tests']
+// ['Submitted 01/21/22 20:56:47 +0000\n', '## Grade: 0.00%', 
+// '  * 0 points of a possible 10', 
+// '  * Passed   0 / 0  tests     (0 failed)', 
+// '    * // Passed  0 / 0 subtests  (0 failed)', 
+// '## Correctness Tests']
 
-// FINISHED RUNNING
+// Output:
+// ['Submitted 01/21/22 20:56:47 +0000\n', '## Grade: 100.00%', 
+// '  * 10 points of a possible 10',
+//  '  * Passed   1 / 1  tests     (0 failed)', 
+// '    * Passed  0 / 0 subtests  (0 failed)',
+//  '## Correctness Tests', '### 1. Negate', '                               -- test passed --']
