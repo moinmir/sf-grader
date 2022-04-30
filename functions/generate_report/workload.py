@@ -81,7 +81,7 @@ def app_handle(args, context, syscall):
     if len(broken_tests) > 0:
         print("hello 1")
         output.append("## Broken Tests")
-        for i in range(broken_tests):
+        for i in range(0, len(broken_tests)):
             print("hello 2")
             output.append("### %d. %s" % (i + 1, broken_tests[i]["conf"]["desc"]) )
             print("hello 3")
