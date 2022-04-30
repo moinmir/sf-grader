@@ -75,15 +75,16 @@ def app_handle(args, state, syscall):
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json", shell=True,
                             stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
 
-                    for test_result in testrun.stderr:
-                        print("hi ya")
-                        print(test_result)
+                    # for test_result in testrun.stderr:
+                    #     print("hi ya")
+                    #     print(test_result)
 
                     for test_result in testrun.stdout:
                         tr = json.loads(test_result)
                         print(tr)
 
-                        # if "pass" not in tr or ""  
+                        # if "pass" not in tr or "fail" not in tr:
+                        #    final_results.append(error message)  
 
                         if tr["Action"] in ["pass", "fail", "run"]:
                             tr = dict((name.lower(), val) for name, val in tr.items())
