@@ -93,8 +93,9 @@ def app_handle(args, state, syscall):
                     start_of_run = False 
                     broken = False
                     last_tr = None
+                    # print("akgnajgn")
                     errMsg = dict(('Output', '--- ERROR: Your code TLEs or Panics.\n'))
-                    print(errMsg)
+                    # print(errMsg)
                     for test_result in testrun.stdout:
                         tr = json.loads(test_result)
                         last_tr = tr
