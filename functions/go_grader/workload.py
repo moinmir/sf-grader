@@ -47,7 +47,7 @@ def app_handle(args, state, syscall):
             with tempfile.NamedTemporaryFile(suffix=".tar.gz") as script_tar:
                 script_tar_data = syscall.read_key(
                     bytes("cos316/%s/grading_script" % assignment, "utf-8"))
-                    
+
                 script_tar.write(script_tar_data)
                 script_tar.flush()
                 with tempfile.TemporaryDirectory() as script_dir:
