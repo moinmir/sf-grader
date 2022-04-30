@@ -75,9 +75,9 @@ def app_handle(args, state, syscall):
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json", shell=True,
                             stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
 
-                    # for test_result in testrun.stderr:
-                    #     print("hi ya")
-                    #     print(test_result)
+                    for test_result in testrun.stderr:
+                        print("hi ya")
+                        print(test_result)
 
                     for test_result in testrun.stdout:
                         tr = json.loads(test_result)
