@@ -93,14 +93,14 @@ def app_handle(args, state, syscall):
                     start_of_run = False 
                     broken = False
                     last_tr = None
-                    errMsg = 'Output': '--- ERROR: Your code TLEs or Panics.\n'
+                    errMsg = {'Output': '--- ERROR: Your code TLEs or Panics.\n'}
                     for test_result in testrun.stdout:
                         tr = json.loads(test_result)
                         last_tr = tr
                         print(tr)
 
                         if tr["Action"] == "run" and start_of_run and broken:
-                            final_results.append(errMsg)
+                            final_results.append(json.dumps(errMsg))
                             start_of_run = False 
                             broken = False
 
