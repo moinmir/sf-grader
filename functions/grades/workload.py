@@ -23,6 +23,7 @@ def app_handle(args, context, syscall):
     print("test_runs: %s" % test_runs)
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
 
+    print(grader_config)
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
     print(config["tests"])
 
