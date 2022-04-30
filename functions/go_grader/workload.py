@@ -17,6 +17,7 @@ def handle(req, syscall):
 
     if len(workflow) > 0:
         next_function = workflow.pop(0)
+        print("\nNext function in workflow: %s\n" % next_function)
         syscall.invoke(next_function, json.dumps({
             "args": result,
             "workflow": workflow,
@@ -27,7 +28,7 @@ def handle(req, syscall):
 
 def app_handle(args, state, syscall):
     print("\n\n\n\n========================================")
-    print("GO GRADER")
+    print("Function: GO GRADER\n")
     os.system("ifconfig lo up")
     # Fetch and untar submission tarball
     assignment = state["metadata"]["assignment"]
@@ -67,7 +68,7 @@ def app_handle(args, state, syscall):
                     final_results = []
 
                     if compiledtest.returncode != 0:
-                        print("COMPILATION FAILED\n\n")
+                        print("COMPILATION FAILED\n")
                         out = {"error": {"compile": str(
                             compileerr), "returncode": compiledtest.returncode}}
                         final_results.append(json.dumps(out))

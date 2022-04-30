@@ -51,8 +51,7 @@ def app_handle(args, context, syscall):
     key = os.path.join(os.path.dirname(args["test_results"]),"grade.json")
     syscall.write_key(bytes(key, "utf-8"), bytes(json.dumps(output), "utf-8"))
 
-    print("Output:\n")
-    print(output)
+
     print("\nFINISHED RUNNING")
     print("================================================\n\n\n\n")
 
