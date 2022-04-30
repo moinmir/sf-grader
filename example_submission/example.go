@@ -3,9 +3,9 @@ package example
 //==================================================
 // This compiles
 //==================================================
-func Negate(x bool) bool {
-	return !x
-}
+// func Negate(x bool) bool {
+// 	return !x
+// }
 
 //==================================================
 // This doesn't compile
@@ -20,3 +20,8 @@ func Negate(x bool) bool {
 // func Negate(x bool) string {
 // 	return !x
 // }
+
+// cannot use !x (type bool) as type int in return argument
+func Negate(x bool) byte {
+	return !x
+}
