@@ -17,7 +17,7 @@ def handle(req, syscall):
 
     if len(workflow) > 0:
         next_function = workflow.pop(0)
-        print("\nNext function in workflow: %s\n" % next_function)
+        print("\nNext function: %s\n" % next_function)
         print("========================================\n\n\n\n")
         syscall.invoke(next_function, json.dumps({
             "args": result,
@@ -74,7 +74,7 @@ def app_handle(args, state, syscall):
                         out = {"error": {"compile": str(
                             compileerr), "returncode": compiledtest.returncode}}
                         final_results.append(json.dumps(out))
-                        print("Output:")
+                        print("\nOutput:")
                         print(final_results)
                         key = os.path.join(os.path.splitext(args["submission"])[
                                            0], "test_results.jsonl")
@@ -102,7 +102,7 @@ def app_handle(args, state, syscall):
                     syscall.write_key(bytes(key, "utf-8"),
                                       bytes('\n'.join(final_results), "utf-8"))
                     testrun.wait()
-                    print("Output:")
+                    print("\n\nOutput:")
                     print(final_results)
                     if testrun.returncode >= 0:
                         return {"test_results": key}

@@ -9,6 +9,8 @@ def handle(req, syscall):
     result = app_handle(args, context, syscall)
     if len(workflow) > 0:
         next_function = workflow.pop(0)
+        print("\nNext function: %s" % next_function)
+        print("========================================\n\n\n\n")
         syscall.invoke(next_function, json.dumps({
             "args": result,
             "workflow": workflow,
@@ -34,13 +36,6 @@ def app_handle(args, context, syscall):
     total_points = sum([test["points"] for test in config["tests"].values(
     ) if "extraCredit" not in test or not test["extraCredit"]])
     
-    print("\n\n Test RUNS:")
-    print(test_runs)
-    print("\n\n")
-    print("\n\n GRADER CONFIG:")
-    print(config["tests"])
-    print("\n\n")
-
     tests = []
     for (test_name, conf) in config["tests"].items():
         if test_name in test_runs:
@@ -55,9 +50,6 @@ def app_handle(args, context, syscall):
         if test["action"] == "pass":
             points += test["conf"]["points"]
 
-    print("\n\nWE ARE HERE ")
-    print(tests)
-    print("\n\n")
     
     output = {
         "points": points,
@@ -70,8 +62,8 @@ def app_handle(args, context, syscall):
     key = os.path.join(os.path.dirname(args["test_results"]), "grade.json")
     syscall.write_key(bytes(key, "utf-8"), bytes(json.dumps(output), "utf-8"))
 
-    print("\nFINISHED RUNNING")
-    print("================================================\n\n\n\n")
+    print("\n\nOutput:")
+    print(output)
 
     return {
         "grade": points / total_points,

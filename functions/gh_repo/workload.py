@@ -21,6 +21,8 @@ def handle(req, syscall):
 
         if len(workflow) > 0:
             next_function = workflow.pop(0)
+            print("\nNext function: %s" % next_function)
+            print("========================================\n\n\n\n")
             syscall.invoke(next_function, json.dumps({
                 "args": {
                     "submission": key
@@ -33,11 +35,8 @@ def handle(req, syscall):
                     "metadata": metadata
                 }
             }))
-        
-        print("\n\nFINISHED RUNNING")
-        print("================================================\n\n\n\n")
+        print("\n\nOutput:")
+        print({ "written": len(resp.data), "key": key })
         return { "written": len(resp.data), "key": key }
     else:
-        print("\n\nFINISHED RUNNING")
-        print("================================================\n\n\n\n")
         return {}

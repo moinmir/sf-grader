@@ -7,6 +7,8 @@ def handle(req, syscall):
     result = app_handle(args, context, syscall)
     if len(workflow) > 0:
         next_function = workflow.pop(0)
+        print("\nNext function: %s" % next_function)
+        print("========================================\n\n\n\n")
         syscall.invoke(next_function, json.dumps({
             "args": result,
             "workflow": workflow,

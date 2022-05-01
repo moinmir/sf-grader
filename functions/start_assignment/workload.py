@@ -76,4 +76,7 @@ def handle(req, syscall):
         syscall.write_key(bytes('cos316/assignments/%s/%s' % (req["assignment"], user), 'utf-8'),
                           bytes("cos316/%s" % name, 'utf-8'))
 
+    print("\n\nOutput:")
+    print({ 'name': name, 'users': list(users), 'github_handles': req['gh_handles'] })
+
     return { 'name': name, 'users': list(users), 'github_handles': req['gh_handles'] }

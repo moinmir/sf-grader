@@ -10,19 +10,14 @@ def handle(req, syscall):
     result = app_handle(args, context, syscall)
     if len(workflow) > 0:
         next_function = workflow.pop(0)
+        print("\nNext function: %s" % next_function)
+        print("========================================\n\n\n\n")
         syscall.invoke(next_function, json.dumps({
             "args": result,
             "workflow": workflow,
             "context": context
         }))
     return result
-
-# test_runs: {'TestCorrect': {'action': 'pass', 'test': 'TestCorrect'}, 'TestNegate': {'action': 'run', 'test': 'TestNegate'}}
-# ## Grade: 0.00%
-#   * 0 points of a possible 20
-#   * Passed   0 / 0  tests     (0 failed)
-#     * Passed  0 / 0 subtests  (0 failed)
-# ## Correctness Tests
 
 def app_handle(args, context, syscall):
     print("\n\n\n\n========================================")
@@ -32,18 +27,11 @@ def app_handle(args, context, syscall):
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
     delim = config["subtest"]["delim"]
     grade = json.loads(syscall.read_key(bytes(args["grade_report"], "utf-8")))
-
-
-#  'tests': [{'action': 'run', 'test': 'TestNegate', 'conf': {'desc': 'Negate', 'points': 10.0}, 'subtests': {}}, 
-#            {'action': 'pass', 'test': 'TestCorrect', 'conf': {'desc': 'Marina is cool.', 'points': 10.0}, 'subtests': {}}]
-
-    print(grade["tests"])
+    
     broken_tests = []
     for test in grade["tests"]:
         if test["action"] == "run":
             broken_tests.append(test)
-            # if (i + 1 < len(grade["tests"]) and grade["tests"][i + 1]["action"] == "run"):
-            # if len(grade["tests"]) == i+1:
     
     grade["tests"] = [test for test in grade["tests"] if test["action"] in ["pass", "fail"]]
     correctness_tests = [ test for test in grade["tests"] if not ("performance" in test["conf"] and test["conf"]["performance"])]
@@ -59,11 +47,7 @@ def app_handle(args, context, syscall):
     output.append("  * %d points of a possible %d" % (grade["points"], grade["possible"]))
     output.append("  * Passed   %d / %d  tests     (%d failed)" % (tests_passed, len(grade["tests"]), len(grade["tests"]) - tests_passed))
     output.append("    * Passed  %d / %d subtests  (%d failed)" % (passed_subtests, len(all_subtests), len(all_subtests) - passed_subtests))
-    
-    print("\nLength Broken tests: %d" % len(broken_tests))
-    print("\nLength correctness tests: %d" % len(correctness_tests))
-    print("\nLength performance tests: %d" % len(performance_tests))
-    
+
     output.append("## Correctness Tests")
     for i, test in enumerate(correctness_tests):
         output.append("### %d. %s" % (i + 1, test["conf"]["desc"]) )
@@ -97,7 +81,7 @@ def app_handle(args, context, syscall):
     key = "%s-report.md" % os.path.splitext(args["grade_report"])[0]
     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
     
-    print("\nOutput:")
+    print("\n\nOutput:")
     print(output)
 
     return { "report": key }
