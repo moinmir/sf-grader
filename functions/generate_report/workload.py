@@ -45,7 +45,7 @@ def app_handle(args, context, syscall):
     output.append("Submitted %s\n" % formatted_submission_ts)
     output.append("## Grade: %.2f%%" % (grade["grade"] * 100))
     output.append("  * %d points of a possible %d" % (grade["points"], grade["possible"]))
-    output.append("  * Passed   %d / %d  tests     (%d failed)" % (tests_passed, len(grade["tests"]), len(grade["tests"]) - tests_passed))
+    output.append("  * Passed   %d / %d  tests     (%d failed)" % (tests_passed, len(grade["tests"])+len(broken_tests), len(grade["tests"])+len(broken_tests) - tests_passed))
     output.append("    * Passed  %d / %d subtests  (%d failed)" % (passed_subtests, len(all_subtests), len(all_subtests) - passed_subtests))
 
     output.append("## Correctness Tests")
