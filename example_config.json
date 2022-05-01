@@ -6,8 +6,8 @@
       "format": "  >     %10s %-40s"
     },
     "tests": {
-      "TestNegate": {
-        "desc": "Tests the panicking negate function",
+      "TestCorrect": {
+        "desc": "Tests the correct negate function",
         "points": 10.0
       }
     }
