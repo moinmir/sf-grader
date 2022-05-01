@@ -28,7 +28,10 @@ def app_handle(args, context, syscall):
     test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results"], "utf-8")).split(b'\n') ]
 
     # parse error message    
+    print("hi iaigiagijiag")
+    print(test_lines[0]['error']['compile'])
     err = str(test_lines[0]['error']['compile']).replace("\\n'", "").split("/")[3]
+
     
     # format output
     output = []
