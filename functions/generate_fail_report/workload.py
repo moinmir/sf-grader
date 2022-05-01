@@ -33,8 +33,13 @@ def app_handle(args, context, syscall):
 
     err = str(test_lines[0]['error']['compile']).replace("\\n'", "").split("/")[3 : ]
     new_err = ""
-    for e in range(len(err), 2): 
+    for e in range(0, len(err), 2): 
         new_err += err[e] + "\n"
+    
+    # all_errors = []
+    # for error in err:
+    #     if re.search("*:.:*", error):
+
 
     # 'example.go:3:9: imported and not used: "fmt"\\n..', 
     # 'tmpymqtly74', 
