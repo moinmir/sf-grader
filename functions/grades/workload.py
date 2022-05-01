@@ -48,6 +48,10 @@ def app_handle(args, context, syscall):
         if test["action"] == "pass":
             points += test["conf"]["points"]
 
+    print("\n\nWE ARE HERE ")
+    print(tests)
+    print("\n\n")
+    
     output = {
         "points": points,
         "possible": total_points,
