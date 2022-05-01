@@ -5,7 +5,7 @@ import time
 
 def handle(req, syscall):
     print("\n\n\n\n========================================")
-    print("GH REPO")
+    print("Function: GH REPO")
    
     key = "github/%s/%s.tgz" % (req["repository"]["full_name"], req["after"])
     meta_key = "github/%s/_meta" % (req["repository"]["full_name"])
