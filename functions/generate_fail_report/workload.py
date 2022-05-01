@@ -41,11 +41,11 @@ def app_handle(args, context, syscall):
     print(test_lines[0]['error']['compile'])
     err = str(test_lines[0]['error']['compile']).replace("\\n'", "").split("/")[2]
 
-    # 'example.go:3:9: imported and not used: "fmt"\\n..
+    # 'example.go:3:9: imported and not used: "fmt"
     # /tmp2x56x70j/example.go:8:9: cannot use !x (type bool) as type string in return argument\\n..
     # /tmp2x56x70j/example.go:18:9: cannot use !x (type bool) as type int in return argument']
 
-    print(err.split("/"))
+    print(err.split("\\n.."))
     
     
     
