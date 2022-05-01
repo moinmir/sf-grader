@@ -1,12 +1,12 @@
 package example
 
-// import "fmt"
+import "fmt"
 
 //==================================================
 // This compiles
 //==================================================
 func NegateCorrect(x bool) string {
-	//y := 5/0
+	y := 5/0
 	return !x
 }
 

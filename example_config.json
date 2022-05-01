@@ -9,11 +9,12 @@
       "TestCorrect": {
         "desc": "Tests the correct negate function",
         "points": 10.0
-      },
-      "TestNegate": {
-        "desc": "Tests the panicking negate function",
-        "points": 10.0
       }
+      // ,
+      // "TestNegate": {
+      //   "desc": "Tests the panicking negate function",
+      //   "points": 10.0
+      // }
     }
 }
   
