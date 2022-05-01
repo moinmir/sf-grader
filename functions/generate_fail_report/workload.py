@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
-from functools import reduce
 import json
 import os
+import re
 
 def handle(req, syscall):
     args = req["args"]
@@ -35,10 +35,12 @@ def app_handle(args, context, syscall):
     new_err = ""
     for e in range(0, len(err), 2): 
         new_err += err[e] + "\n"
+    print(new_err)
     
     # all_errors = []
     # for error in err:
     #     if re.search("*:.:*", error):
+    #         all_errors.append(error)
 
 
     # 'example.go:3:9: imported and not used: "fmt"\\n..', 
@@ -59,7 +61,7 @@ def app_handle(args, context, syscall):
     formatted_submission_ts = datetime.utcfromtimestamp(context["push_date"]).replace(tzinfo=timezone.utc).astimezone(tz=None).strftime('%D %T %z')
     output.append("Submitted %s\n" % formatted_submission_ts)
     output.append("## Compilation error")
-    output.append("### %s" % (err))
+    output.append("### %s" % (new_err))
 
     # create report 
     grade_report_key = os.path.join(os.path.dirname(args["test_results"]),"grade.json")
