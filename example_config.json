@@ -1,5 +1,5 @@
 {
-    "name": "Secure Object Relational Mapper",
+    "name": "Example Assignment",
     "grading_timeout": 180,
     "subtest": {
       "delim": "=",
@@ -7,11 +7,11 @@
     },
     "tests": {
       "TestNegate": {
-        "desc": "Negate",
+        "desc": "Tests the panicking negate function",
         "points": 10.0
       },
       "TestCorrect": {
-        "desc": "Marina is cool.",
+        "desc": "Tests the correct negate function",
         "points": 10.0
       }
     }
