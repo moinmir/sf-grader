@@ -31,6 +31,7 @@ def app_handle(args, context, syscall):
     all_errors = []
     for error in err:
         if re.search(".*:[1-9]*:.*", error):
+            error.replace("\\n", "")
             all_errors.append(error.replace("..", ""))
 
     output = []
