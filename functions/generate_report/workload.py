@@ -37,6 +37,7 @@ def app_handle(args, context, syscall):
 #  'tests': [{'action': 'run', 'test': 'TestNegate', 'conf': {'desc': 'Negate', 'points': 10.0}, 'subtests': {}}, 
 #            {'action': 'pass', 'test': 'TestCorrect', 'conf': {'desc': 'Marina is cool.', 'points': 10.0}, 'subtests': {}}]
 
+    print(grade["tests"])
     broken_tests = []
     for i in range(grade["tests"]):
         if grade["tests"][i]["action"] == "run":
