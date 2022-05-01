@@ -45,6 +45,7 @@ def app_handle(args, context, syscall):
     # /tmp2x56x70j/example.go:8:9: cannot use !x (type bool) as type string in return argument\\n..
     # /tmp2x56x70j/example.go:18:9: cannot use !x (type bool) as type int in return argument']
 
+    print(err)
     print(err.split("\\n.."))
     
     
