@@ -29,8 +29,23 @@ def app_handle(args, context, syscall):
 
     # parse error message    
     print("hi iaigiagijiag")
+
+    # b'# example.com/
+    # example\n..
+    # /tmp4d5pfk4q/example.go:3:9: imported and not used: "fmt"\n..
+    
+    # /tmp4d5pfk4q/example.go:8:9: cannot use !x (type bool) as type string in return argument\n..
+    
+    # /tmp4d5pfk4q/example.go:18:9: cannot use !x (type bool) as type int in return argument\n'
+
     print(test_lines[0]['error']['compile'])
-    err = str(test_lines[0]['error']['compile']).replace("\\n'", "").split("/")[3]
+    err = str(test_lines[0]['error']['compile']).replace("\\n'", "").split("/", 3)
+    # for error in err:
+    #     msg = error.split("/", 1)[1]
+    print(err)
+    # [3]
+    
+    
 
     
     # format output
