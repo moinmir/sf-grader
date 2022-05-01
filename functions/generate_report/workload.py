@@ -39,12 +39,11 @@ def app_handle(args, context, syscall):
 
     print(grade["tests"])
     broken_tests = []
-    for i in range(grade["tests"]):
-        if grade["tests"][i]["action"] == "run":
-            if (i + 1 < len(grade["tests"]) and grade["tests"][i + 1]["action"] == "run"):
-                broken_tests.append(grade["tests"][i])
-            if len(grade["tests"]) == i+1:
-                broken_tests.append(grade["tests"][i])
+    for test in grade["tests"]:
+        if test["action"] == "run":
+            broken_tests.append(test)
+            # if (i + 1 < len(grade["tests"]) and grade["tests"][i + 1]["action"] == "run"):
+            # if len(grade["tests"]) == i+1:
     
     grade["tests"] = [test for test in grade["tests"] if test["action"] in ["pass", "fail"]]
     correctness_tests = [ test for test in grade["tests"] if not ("performance" in test["conf"] and test["conf"]["performance"])]
@@ -60,7 +59,11 @@ def app_handle(args, context, syscall):
     output.append("  * %d points of a possible %d" % (grade["points"], grade["possible"]))
     output.append("  * Passed   %d / %d  tests     (%d failed)" % (tests_passed, len(grade["tests"]), len(grade["tests"]) - tests_passed))
     output.append("    * Passed  %d / %d subtests  (%d failed)" % (passed_subtests, len(all_subtests), len(all_subtests) - passed_subtests))
-
+    
+    print("\nLength Broken tests: %d" % len(broken_tests))
+    print("\nLength correctness tests: %d" % len(correctness_tests))
+    print("\nLength performance tests: %d" % len(performance_tests))
+    
     output.append("## Correctness Tests")
     for i, test in enumerate(correctness_tests):
         output.append("### %d. %s" % (i + 1, test["conf"]["desc"]) )
