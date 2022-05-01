@@ -17,9 +17,19 @@ def handle(req, syscall):
         }))
     return result
 
+# test_runs: {'TestCorrect': {'action': 'pass', 'test': 'TestCorrect'}, 'TestNegate': {'action': 'run', 'test': 'TestNegate'}}
+# ## Grade: 0.00%
+#   * 0 points of a possible 20
+#   * Passed   0 / 0  tests     (0 failed)
+#     * Passed  0 / 0 subtests  (0 failed)
+# ## Correctness Tests
+
 def app_handle(args, context, syscall):
     print("\n\n\n\n========================================")
     print("Function: GENERATE REPORT\n")
+    print(args)
+    print(context)
+    
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
     delim = config["subtest"]["delim"]
