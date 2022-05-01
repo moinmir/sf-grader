@@ -31,7 +31,7 @@ def app_handle(args, context, syscall):
     all_errors = []
     for error in err:
         if re.search(".*:[1-9]*:.*", error):
-            error.replace("\n", "")
+            error = error.replace("\n", "")
             all_errors.append(error.replace("..", ""))
 
     output = []
@@ -40,7 +40,7 @@ def app_handle(args, context, syscall):
     output.append("## Compilation error")
     for error in all_errors:
         output.append("### %s" % str(error))
-
+ 
     # create report 
     grade_report_key = os.path.join(os.path.dirname(args["test_results"]),"grade.json")
     key = "%s-report.md" % os.path.splitext(grade_report_key)[0]
