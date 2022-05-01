@@ -5,7 +5,7 @@ package example
 //==================================================
 // This compiles
 //==================================================
-func NegateCorrect(x bool) string {
+func NegateCorrect(x bool) bool {
 	//y := 5/0
 	return !x
 }
