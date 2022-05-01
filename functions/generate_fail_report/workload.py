@@ -30,25 +30,24 @@ def app_handle(args, context, syscall):
     # parse error message    
     print("hi iaigiagijiag")
 
-    # b'# example.com/
-    # example\n..
-    # /tmp4d5pfk4q/example.go:3:9: imported and not used: "fmt"\n..
-    
-    # /tmp4d5pfk4q/example.go:8:9: cannot use !x (type bool) as type string in return argument\n..
-    
-    # /tmp4d5pfk4q/example.go:18:9: cannot use !x (type bool) as type int in return argument\n'
 
-    print(test_lines[0]['error']['compile'])
-    err = str(test_lines[0]['error']['compile']).replace("\\n'", "").split("/")[2]
+    err = str(test_lines[0]['error']['compile']).replace("\\n'", "").split("/")
+    print("Err")
+    print(err)
 
     # 'example.go:3:9: imported and not used: "fmt"
     # /tmp2x56x70j/example.go:8:9: cannot use !x (type bool) as type string in return argument\\n..
+
+    print("err.split("\\n..")")
     # /tmp2x56x70j/example.go:18:9: cannot use !x (type bool) as type int in return argument']
 
-    print(err)
     print(err.split("\\n.."))
     
     
+    # b'# example.com/example\n../tmpaog93yz4/example.go:3:9: imported and not used: "fmt"\n../tmpaog93yz4/example.go:8:9: cannot use !x (type bool) as type string in return argument\n../tmpaog93yz4/example.go:18:9: cannot use !x (type bool) as type int in return argument\n'
+# tmpaog93yz4
+# ['tmpaog93yz4']
+
     
 
     
