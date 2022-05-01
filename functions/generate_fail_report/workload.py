@@ -31,15 +31,15 @@ def app_handle(args, context, syscall):
     print("hi iaigiagijiag")
 
 
-    err = str(test_lines[0]['error']['compile']).replace("\\n'", "").split("/")[3 : ]
-    new_err = ""
-    for e in range(0, len(err), 2): 
-        new_err += err[e].replace("..", "") + "\n"
+    err = str(test_lines[0]['error']['compile']).replace("\\n'", "").split("/")
+    # new_err = ""
+    # for e in range(0, len(err), 2): 
+    #     new_err += err[e].replace("..", "") + "\n"
     
-    # all_errors = []
-    # for error in err:
-    #     if re.search("*:.:*", error):
-    #         all_errors.append(error)
+    all_errors = []
+    for error in err:
+        if re.search(".*:[1-9]*:.*", error):
+            all_errors.append(error)
 
 
     # 'example.go:3:9: imported and not used: "fmt"\\n..', 
@@ -60,7 +60,8 @@ def app_handle(args, context, syscall):
     formatted_submission_ts = datetime.utcfromtimestamp(context["push_date"]).replace(tzinfo=timezone.utc).astimezone(tz=None).strftime('%D %T %z')
     output.append("Submitted %s\n" % formatted_submission_ts)
     output.append("## Compilation error")
-    output.append("### %s" % (new_err))
+    for error in all_errors:
+        output.append("### %s" % str(error))
 
     # create report 
     grade_report_key = os.path.join(os.path.dirname(args["test_results"]),"grade.json")
