@@ -82,7 +82,7 @@ def app_handle(args, state, syscall):
                             bytes(key, "utf-8"), bytes('\n'.join(final_results), "utf-8"))
 
                         return out
-                    print("COMPILATION SUCCEEDED\n")
+                    print("COMPILATION SUCCEEDED")
 
                     testrun = subprocess.Popen("/tmp/grader -test.v | /srv/usr/lib/go/pkg/tool/linux_amd64/test2json",
                                                shell=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
