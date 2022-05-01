@@ -33,7 +33,11 @@ def app_handle(args, context, syscall):
     
     total_points = sum([test["points"] for test in config["tests"].values(
     ) if "extraCredit" not in test or not test["extraCredit"]])
-
+    
+    print("\n\n Test RUNS:")
+    print(test_runs)
+    print("\n\n")
+    
     tests = []
     for (test_name, conf) in config["tests"].items():
         if test_name in test_runs:
