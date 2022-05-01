@@ -27,24 +27,24 @@ def handle(req, syscall):
 def app_handle(args, context, syscall):
     print("\n\n\n\n========================================")
     print("Function: GENERATE REPORT\n")
-    print(args)
-    print(context)
 
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))
     delim = config["subtest"]["delim"]
     grade = json.loads(syscall.read_key(bytes(args["grade_report"], "utf-8")))
 
-    print(grade)
+
+#  'tests': [{'action': 'run', 'test': 'TestNegate', 'conf': {'desc': 'Negate', 'points': 10.0}, 'subtests': {}}, 
+#            {'action': 'pass', 'test': 'TestCorrect', 'conf': {'desc': 'Marina is cool.', 'points': 10.0}, 'subtests': {}}]
 
     broken_tests = []
-    for i, test in enumerate(grade["tests"]):
-        if test["action"] == "run":
+    for i in range(grade["tests"]):
+        if grade["tests"][i]["action"] == "run":
             if (i + 1 < len(grade["tests"]) and grade["tests"][i + 1]["action"] == "run"):
-                broken_tests.append(test)
+                broken_tests.append(grade["tests"][i])
             if len(grade["tests"]) == i+1:
-                broken_tests.append(test)
-
+                broken_tests.append(grade["tests"][i])
+    
     grade["tests"] = [test for test in grade["tests"] if test["action"] in ["pass", "fail"]]
     correctness_tests = [ test for test in grade["tests"] if not ("performance" in test["conf"] and test["conf"]["performance"])]
     performance_tests = [ test for test in grade["tests"] if ("performance" in test["conf"] and test["conf"]["performance"]) ]
