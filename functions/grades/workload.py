@@ -37,7 +37,10 @@ def app_handle(args, context, syscall):
     print("\n\n Test RUNS:")
     print(test_runs)
     print("\n\n")
-    
+    print("\n\n GRADER CONFIG:")
+    print(config["tests"])
+    print("\n\n")
+
     tests = []
     for (test_name, conf) in config["tests"].items():
         if test_name in test_runs:
