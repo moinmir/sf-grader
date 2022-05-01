@@ -34,7 +34,7 @@ def app_handle(args, context, syscall):
     err = str(test_lines[0]['error']['compile']).replace("\\n'", "").split("/")[3 : ]
     new_err = ""
     for e in range(0, len(err), 2): 
-        new_err += err[e].replace("\n..", "") + "\n"
+        new_err += err[e].replace("..", "") + "\n"
     
     # all_errors = []
     # for error in err:
