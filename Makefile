@@ -31,7 +31,7 @@ prepdb: output/example_grader.tgz output/example_submission.tgz
 	sfdb -b cos316/example/grader_config - < example_config.json
 
 run/%: output/%.img payloads/%.jsonl
-	@multivm --mem_size 1024 --kernel vmlinux-4.20.0 --rootfs python3.ext4 --appfs output/$*.img < payloads/$*.jsonl
+	@singlevm --kernel_args="console=ttyS0" --mem_size 1024 --kernel vmlinux-4.20.0 --rootfs python3.ext4 --appfs output/$*.img < payloads/$*.jsonl
 	@touch $@
 
 .PHONY: clean
