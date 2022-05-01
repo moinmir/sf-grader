@@ -27,35 +27,12 @@ def app_handle(args, context, syscall):
     # fetch test results
     test_lines = [ json.loads(line) for line in syscall.read_key(bytes(args["test_results"], "utf-8")).split(b'\n') ]
 
-    # parse error message    
-    print("hi iaigiagijiag")
-
-
     err = str(test_lines[0]['error']['compile']).replace("\\n'", "").split("/")
-    # new_err = ""
-    # for e in range(0, len(err), 2): 
-    #     new_err += err[e].replace("..", "") + "\n"
-    
     all_errors = []
     for error in err:
         if re.search(".*:[1-9]*:.*", error):
             all_errors.append(error.replace("..", ""))
 
-
-    # 'example.go:3:9: imported and not used: "fmt"\\n..', 
-    # 'tmpymqtly74', 
-    # 'example.go:8:9: cannot use !x (type bool) as type string in return argument\\n..', 
-    # 'tmpymqtly74', 
-    # 'example.go:18:9: cannot use !x (type bool) as type int in return argument']
-
-    # print("Err")
-    # print(err)
-
-    # print("err.split(\\n.)")
-
-    # print(err.split("\\n..")) 
-    
-    # format output
     output = []
     formatted_submission_ts = datetime.utcfromtimestamp(context["push_date"]).replace(tzinfo=timezone.utc).astimezone(tz=None).strftime('%D %T %z')
     output.append("Submitted %s\n" % formatted_submission_ts)
