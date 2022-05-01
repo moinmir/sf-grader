@@ -20,15 +20,13 @@ def handle(req, syscall):
 
 
 def app_handle(args, context, syscall):
-    print("\n\n\n\n========================================\n")
+    print("\n\n\n\n========================================")
     print("Function: GRADES")
-    print(args["test_results"])
 
     test_lines = [json.loads(line) for line in syscall.read_key(
         bytes(args["test_results"], "utf-8")).split(b'\n')]
     test_runs = dict((line['test'], line)
                      for line in test_lines if 'test' in line)
-    print("test_runs: %s" % test_runs)
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
 
     config = json.loads(syscall.read_key(bytes(grader_config, "utf-8")))

@@ -17,7 +17,7 @@ def handle(req, syscall):
 
     if len(workflow) > 0:
         next_function = workflow.pop(0)
-        print("\nNext function: %s\n" % next_function)
+        print("\nNext function: %s" % next_function)
         print("========================================\n\n\n\n")
         syscall.invoke(next_function, json.dumps({
             "args": result,
@@ -89,8 +89,6 @@ def app_handle(args, state, syscall):
 
                     for test_result in testrun.stdout:
                         tr = json.loads(test_result)
-                        if tr["Action"] == "run":
-                            print(tr)
 
                         if tr["Action"] in ["pass", "fail", "run"]:
                             tr = dict((name.lower(), val)
