@@ -14,7 +14,6 @@ func TestCorrect(t *testing.T) {
 }
 
 func TestNegate(t *testing.T) {
-	panic("Hi, Moma! I am panicking.")
 	if example.Negate(true) {
 		t.Errorf("Expected false, was true")
 	}
