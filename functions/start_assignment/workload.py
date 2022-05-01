@@ -20,9 +20,9 @@ wave water resonance sun log dream cherry tree fog
 frost voice paper frog smoke star""".split()
 
 def handle(req, syscall):
-    print("\n\n\n\n================================================================================")
+    print("\n\n\n\n========================================================================================================================")
     print("START ASSIGNMENT")
-    print("========================================================================================\n\n\n\n")
+    print("================================================================================================================================\n\n\n\n")
     assignments = json.loads(syscall.read_key(b'cos316/assignments'))
     if req["assignment"] not in assignments:
         return { 'error': 'No such assignment' }
