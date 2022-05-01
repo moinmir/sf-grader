@@ -12,7 +12,7 @@ def handle(req, syscall):
     if len(workflow) > 0:
         next_function = workflow.pop(0)
         print("\nNext function: %s" % next_function)
-        print("========================================\n\n\n\n")
+        print("================================================================================\n\n\n\n")
         syscall.invoke(next_function, json.dumps({
             "args": result,
             "workflow": workflow,
@@ -21,7 +21,7 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, context, syscall):
-    print("\n\n\n\n========================================")
+    print("\n\n\n\n================================================================================")
     print("Function: GENERATE FAIL REPORT\n")    
 
     # fetch test results
@@ -42,7 +42,7 @@ def app_handle(args, context, syscall):
     key = "%s-report.md" % os.path.splitext(grade_report_key)[0]
     syscall.write_key(bytes(key, "utf-8"), bytes('\n'.join(output), 'utf-8'))
 
-    print("\n\nOutput:")
+    print("Output:\n")
     print(output)
 
     return { "report": key }

@@ -4,7 +4,7 @@ import os
 import time
 
 def handle(req, syscall):
-    print("\n\n\n\n========================================")
+    print("\n\n\n\n================================================================================")
     print("Function: GH REPO")
    
     key = "github/%s/%s.tgz" % (req["repository"]["full_name"], req["after"])
@@ -22,7 +22,6 @@ def handle(req, syscall):
         if len(workflow) > 0:
             next_function = workflow.pop(0)
             print("\nNext function: %s" % next_function)
-            print("========================================\n\n\n\n")
             syscall.invoke(next_function, json.dumps({
                 "args": {
                     "submission": key
@@ -35,8 +34,9 @@ def handle(req, syscall):
                     "metadata": metadata
                 }
             }))
-        print("\n\nOutput:")
+        print("\nOutput:\n")
         print({ "written": len(resp.data), "key": key })
+        print("================================================================================\n\n\n\n")
         return { "written": len(resp.data), "key": key }
     else:
         return {}

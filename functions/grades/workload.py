@@ -10,7 +10,7 @@ def handle(req, syscall):
     if len(workflow) > 0:
         next_function = workflow.pop(0)
         print("\nNext function: %s" % next_function)
-        print("========================================\n\n\n\n")
+        print("================================================================================\n\n\n\n")
         syscall.invoke(next_function, json.dumps({
             "args": result,
             "workflow": workflow,
@@ -20,8 +20,8 @@ def handle(req, syscall):
 
 
 def app_handle(args, context, syscall):
-    print("\n\n\n\n========================================")
-    print("Function: GRADES")
+    print("\n\n\n\n================================================================================")
+    print("Function: GRADES\n")
 
     test_lines = [json.loads(line) for line in syscall.read_key(
         bytes(args["test_results"], "utf-8")).split(b'\n')]
@@ -60,7 +60,7 @@ def app_handle(args, context, syscall):
     key = os.path.join(os.path.dirname(args["test_results"]), "grade.json")
     syscall.write_key(bytes(key, "utf-8"), bytes(json.dumps(output), "utf-8"))
 
-    print("\n\nOutput:")
+    print("Output:\n")
     print(output)
 
     return {

@@ -18,7 +18,7 @@ def handle(req, syscall):
     if len(workflow) > 0:
         next_function = workflow.pop(0)
         print("\nNext function: %s" % next_function)
-        print("========================================\n\n\n\n")
+        print("================================================================================\n\n\n\n")
         syscall.invoke(next_function, json.dumps({
             "args": result,
             "workflow": workflow,
@@ -28,7 +28,7 @@ def handle(req, syscall):
 
 
 def app_handle(args, state, syscall):
-    print("\n\n\n\n========================================")
+    print("\n\n\n\n================================================================================")
     print("Function: GO GRADER\n")
     os.system("ifconfig lo up")
     # Fetch and untar submission tarball
