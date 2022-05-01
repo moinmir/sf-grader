@@ -3,6 +3,6 @@ package example
 //==================================================
 // This compiles
 //==================================================
-func NegateCorrect(x bool) bool {
+func NegateCorrect(x bool) string {
 	return !x
 }
