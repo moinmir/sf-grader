@@ -39,7 +39,7 @@ def app_handle(args, context, syscall):
     all_errors = []
     for error in err:
         if re.search(".*:[1-9]*:.*", error):
-            all_errors.append(error)
+            all_errors.append(error.replace("..", ""))
 
 
     # 'example.go:3:9: imported and not used: "fmt"\\n..', 
