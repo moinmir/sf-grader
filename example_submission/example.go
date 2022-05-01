@@ -15,7 +15,7 @@ func NegateCorrect(x bool) bool {
 //==================================================
 
 //cannot use !x (type bool) as type int in return argument
-func Negate(x bool) int {
+func Negate(x bool) bool {
 	panic("hello")
 	return !x
 }
