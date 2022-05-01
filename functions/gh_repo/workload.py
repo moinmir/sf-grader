@@ -4,7 +4,7 @@ import os
 import time
 
 def handle(req, syscall):
-    print("\n\n\n\n================================================================================")
+    print("\n\n\n\n========================================================================================================================")
     print("Function: GH REPO")
    
     key = "github/%s/%s.tgz" % (req["repository"]["full_name"], req["after"])
@@ -36,7 +36,7 @@ def handle(req, syscall):
             }))
         print("\nOutput:\n")
         print({ "written": len(resp.data), "key": key })
-        print("================================================================================\n\n\n\n")
+        print("========================================================================================================================\n\n\n\n")
         return { "written": len(resp.data), "key": key }
     else:
         return {}

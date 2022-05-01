@@ -11,7 +11,7 @@ def handle(req, syscall):
     if len(workflow) > 0:
         next_function = workflow.pop(0)
         print("\nNext function: %s" % next_function)
-        print("================================================================================\n\n\n\n")
+        print("========================================================================================================================\n\n\n\n")
         syscall.invoke(next_function, json.dumps({
             "args": result,
             "workflow": workflow,
@@ -20,7 +20,7 @@ def handle(req, syscall):
     return result
 
 def app_handle(args, context, syscall):
-    print("\n\n\n\n================================================================================")
+    print("\n\n\n\n========================================================================================================================")
     print("Function: GENERATE REPORT\n")
 
     grader_config = "cos316/%s/grader_config" % context["metadata"]["assignment"]
