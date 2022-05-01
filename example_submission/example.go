@@ -1,12 +1,12 @@
 package example
 
-// import "fmt"
+import "fmt"
 
 //==================================================
 // This compiles
 //==================================================
-func NegateCorrect(x bool) bool {
-	//y := 5/0
+func NegateCorrect(x bool) string {
+	y := 5/0
 	return !x
 }
 
@@ -15,7 +15,7 @@ func NegateCorrect(x bool) bool {
 //==================================================
 
 //cannot use !x (type bool) as type int in return argument
-func Negate(x bool) bool {
-	panic("hello")
-	return !x
-}
+// func Negate(x bool) bool {
+// 	panic("hello")
+// 	return !x
+// }
